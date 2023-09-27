@@ -24,19 +24,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
+      
       - name: Skyline DataMiner Deploy Action
         # You may pin to the exact commit or the version.
         # uses: SkylineCommunications/Skyline-DataMiner-Deploy-Action@5d9d2739772b3d52b9848ce738c5e04f36b6444f
-        uses: SkylineCommunications/Skyline-DataMiner-Deploy-Action@v1.0.11
+        uses: SkylineCommunications/Skyline-DataMiner-Deploy-Action@v1.0.29
         with:
-            # The API-key generated in the DCP Admin app as authentication for a certain DataMiner System, saved in a GitHub secret
-            api-key: ${{ secrets.DATAMINER_DEPLAY_KEY }} 
-            # The path to the .sln file of the solution. Atm only DataMiner Automation Script solutions are supported. E.g ./Example/AutomationScript.sln. Required for stages: All and Upload.
-            solution-path: AutomationScript.sln
-            # The chosen name of the artifact. E.g. MyPackageName.  Required for stages: All, Upload and Deploy.
-            artifact-name: DataMiner-Training
-            # The version number for the artifact. Only required for a release run. Format A.B.C for a stable release or A.B.C-text for a pre-release. Required for stages Upload and All if no build number was provided instead.
-            version: 1.0.1
-            # The build number of a workflow run. Only required for a development run. Required for stages Upload and All if no version was provided instead.
-            build-number: ${{ github.run_rumber }}
+          # The API-key generated in the DCP Admin app as authentication for a certain DataMiner System, saved in a GitHub secret
+          api-key: ${{ secrets.DATAMINER_DEPLOY_KEY }}
+          # The path to the .sln file of the solution. Atm only DataMiner Automation Script solutions are supported. E.g ./Example/AutomationScript.sln. Required for stages: All and Upload.
+          solution-path:  AutomationScript.sln
+          # The chosen name of the artifact. E.g. MyPackageName.  Required for stages: All, Upload and Deploy.
+          artifact-name: DataMiner-Training
+          # The version number for the artifact. Only required for a release run. Format A.B.C for a stable release or A.B.C-text for a pre-release. Required for stages Upload and All if no build number was provided instead.
+          version: 1.0.1
+          # The build number of a workflow run. Only required for a development run. Required for stages Upload and All if no version was provided instead.
+          build-number: ${{ github.run_number }}
+          # Option to enable debug logging. Optional
