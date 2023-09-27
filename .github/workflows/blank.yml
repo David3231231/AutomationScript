@@ -31,7 +31,7 @@ jobs:
         uses: SkylineCommunications/Skyline-DataMiner-Deploy-Action@v1.0.29
         with:
           # The API-key generated in the DCP Admin app as authentication for a certain DataMiner System, saved in a GitHub secret
-          api-key: ${{ secrets.DATAMINER_DEPLOY_KEY }}
+          api-key: ${{secrets.DATAMINER_DEPLOY_KEY}}
           # The path to the .sln file of the solution. Atm only DataMiner Automation Script solutions are supported. E.g ./Example/AutomationScript.sln. Required for stages: All and Upload.
           solution-path:  AutomationScript.sln
           # The chosen name of the artifact. E.g. MyPackageName.  Required for stages: All, Upload and Deploy.
