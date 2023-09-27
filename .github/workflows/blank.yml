@@ -35,7 +35,7 @@ jobs:
           # The path to the .sln file of the solution. Atm only DataMiner Automation Script solutions are supported. E.g ./Example/AutomationScript.sln. Required for stages: All and Upload.
           solution-path:  AutomationScript.sln
           # The chosen name of the artifact. E.g. MyPackageName.  Required for stages: All, Upload and Deploy.
-          artifact-name:  EmpowerHelloWorld
+          artifact-name:  DataMiner-Training
           # The version number for the artifact. Only required for a release run. Format A.B.C for a stable release or A.B.C-text for a pre-release. Required for stages Upload and All if no build number was provided instead.
           version: 1.0.1
           # The build number of a workflow run. Only required for a development run. Required for stages Upload and All if no version was provided instead.
