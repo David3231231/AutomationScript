@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <Company>Skyline Communications</Company>
+    <Copyright>© Skyline Communications</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QAction_Helper\QAction_Helper.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Skyline.DataMiner.Dev.Protocol" Version="10.1.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Interop.SLDms">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\Interop.SLDms.dll</HintPath>
+    </Reference>
+    <Reference Include="QActionHelperBaseClasses">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\QActionHelperBaseClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="Skyline.DataMiner.Storage.Types">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\Skyline.DataMiner.Storage.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="SLLoggerUtil">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\SLLoggerUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="SLManagedScripting">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\SLManagedScripting.dll</HintPath>
+    </Reference>
+    <Reference Include="SLNetTypes">
+      <HintPath>..\..\..\..\..\users\merrifildd4w\appdata\local\microsoft\visualstudio\17.0_b5ac1a51\extensions\14ckzjed.tvk\Files\DMADLLs\SLNetTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties DisLinkedXmlFile="..\protocol.xml" DisProjectType="qactionProject" DisLinkId="1" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

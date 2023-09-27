@@ -1,0 +1,1598 @@
+﻿<!--
+
+****************************************************************************
+*  Copyright (c) 2019,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+By using this driver, you expressly agree with the usage terms and
+conditions set out below.
+This driver and all related materials are protected by copyrights and
+other intellectual property rights that exclusively belong
+to Skyline Communications.
+
+A user license granted for this driver is strictly for personal use only.
+This driver may not be used in any way by anyone without the prior
+written consent of Skyline Communications. Any sublicensing of this
+driver is forbidden.
+
+Any modifications to this driver by the user are only allowed for
+personal use and within the intended purpose of the driver,
+and will remain the sole responsibility of the user.
+Skyline Communications will not be responsible for any damages or
+malfunctions whatsoever of the driver resulting from a modification
+or adaptation by the user.
+
+The content of this driver is confidential information.
+The user hereby agrees to keep this confidential information strictly
+secret and confidential and not to disclose or reveal it, in whole
+or in part, directly or indirectly to any person, entity, organization
+or administration without the prior written consent of
+Skyline Communications.
+
+Any inquiries can be addressed to:
+
+	Skyline Communications NV
+	Ambachtenstraat 33
+	B-8870 Izegem
+	Belgium
+	Tel.	: +32 51 31 35 69
+	Fax.	: +32 51 31 01 29
+	E-mail	: info@skyline.be
+	Web		: www.skyline.be
+	Contact	: Ben Vandenberghe
+
+****************************************************************************
+Revision History:
+
+DATE		VERSION		AUTHOR			COMMENTS
+
+05/01/2019	1.0.0.1		PB, ABC	        Initial Version
+****************************************************************************
+
+-->
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>TemperatureAlert Sensor</Name>
+	<Description></Description>
+	<Version>1.0.0.1_MEL</Version>
+	<IntegrationID>DMS-DRV-1011</IntegrationID>
+	<Provider>Australian Broadcasting Coeporation</Provider>
+	<Vendor>TemperatureAlert</Vendor>
+	<VendorOID>1.3.6.1.4.1.27297</VendorOID>
+	<DeviceOID>1</DeviceOID>
+	<ElementType></ElementType>
+	<Type relativeTimers="true" options="">http</Type>
+	<Display defaultPage="General" pageOrder="General;Sensor 1;Sensor 2;Sensor 3;Sensor 4" wideColumnPages=""/>
+	<SNMP includepages="true">auto</SNMP>
+	<Params>
+		<Param id="1">
+			<Name>XML_feed_url</Name>
+			<Description>XML feed url</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="2">
+			<Name>AfterStartup</Name>
+			<Description>After Startup</Description>
+			<Type>dummy</Type>
+		</Param>
+		<Param id="3">
+			<Name>Location</Name>
+			<Description>Location</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="4">
+			<Name>Last reading</Name>
+			<Description>Last reading</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="5">
+			<Name>Units</Name>
+			<Description>Units</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="6">
+			<Name>Sensor_1_name</Name>
+			<Description>Name</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="7">
+			<Name>Sensor_1_temp</Name>
+			<Description>Temperature</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="8">
+			<Name>Sensor_1_humidity</Name>
+			<Description>Humidity</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="9">
+			<Name>Sensor_1_temp_alarmStatus</Name>
+			<Description>Temp alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="10">
+			<Name>Received_HTTP_Code</Name>
+			<Description>Received HTTP Code</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="11">
+			<Name>Sensor_1_temp_lowLimit</Name>
+			<Description>Temp low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="12">
+			<Name>Sensor_1_temp_highLimit</Name>
+			<Description>Temp high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="13">
+			<Name>Sensor_1_humidity_lowLimit</Name>
+			<Description>Humidity low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="14">
+			<Name>Sensor_1_humidity_highLimit</Name>
+			<Description>Humidity high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="15">
+			<Name>Sensor_1_humidity_alarmStatus</Name>
+			<Description>Humidity alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="16">
+			<Name>Sensor_2_name</Name>
+			<Description>Name</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="17">
+			<Name>Sensor_2_temp</Name>
+			<Description>Temperature</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="18">
+			<Name>Sensor_2_humidity</Name>
+			<Description>Humidity</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="19">
+			<Name>Sensor_2_temp_alarmStatus</Name>
+			<Description>Temp alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="20">
+			<Name>XML_data_string</Name>
+			<Description>XML Data string</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="21">
+			<Name>Sensor_2_temp_lowLimit</Name>
+			<Description>Temp low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="22">
+			<Name>Sensor_2_temp_highLimit</Name>
+			<Description>Temp high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="23">
+			<Name>Sensor_2_humidity_lowLimit</Name>
+			<Description>Humidity low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="24">
+			<Name>Sensor_2_humidity_highLimit</Name>
+			<Description>Humidity high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="25">
+			<Name>Sensor_2_humidity_alarmStatus</Name>
+			<Description>Humidity alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="26">
+			<Name>Sensor_1_port</Name>
+			<Description>Port #</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 1</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="27">
+			<Name>Sensor_2_port</Name>
+			<Description>Port #</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 2</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="28">
+			<Name>Sensor_3_port</Name>
+			<Description>Port #</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="29">
+			<Name>Sensor_4_port</Name>
+			<Description>Port #</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="30">
+			<Name>Sensor_3_name</Name>
+			<Description>Name</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="31">
+			<Name>Sensor_3_temp</Name>
+			<Description>Temperature</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="32">
+			<Name>Sensor_3_humidity</Name>
+			<Description>Humidity</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="33">
+			<Name>Sensor_3_temp_alarmStatus</Name>
+			<Description>Temp alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="34">
+			<Name>Sensor_3_temp_lowLimit</Name>
+			<Description>Temp low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="35">
+			<Name>Sensor_3_temp_highLimit</Name>
+			<Description>Temp high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="36">
+			<Name>Sensor_3_humidity_lowLimit</Name>
+			<Description>Humidity low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="37">
+			<Name>Sensor_3_humidity_highLimit</Name>
+			<Description>Humidity high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="38">
+			<Name>Sensor_3_humidity_alarmStatus</Name>
+			<Description>Humidity alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 3</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="39">
+			<Name>Sensor_4_name</Name>
+			<Description>Name</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="40">
+			<Name>Sensor_4_temp</Name>
+			<Description>Temperature</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="41">
+			<Name>Sensor_4_humidity</Name>
+			<Description>Humidity</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="42">
+			<Name>Sensor_4_temp_alarmStatus</Name>
+			<Description>Temp alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="43">
+			<Name>Sensor_4_temp_lowLimit</Name>
+			<Description>Temp low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="44">
+			<Name>Sensor_4_temp_highLimit</Name>
+			<Description>Temp high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>deg C</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="45">
+			<Name>Sensor_4_humidity_lowLimit</Name>
+			<Description>Humidity low limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="46">
+			<Name>Sensor_4_humidity_highLimit</Name>
+			<Description>Humidity high limit trigger</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Units>%</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="47">
+			<Name>Sensor_4_humidity_alarmStatus</Name>
+			<Description>Humidity alarm status</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Sensor 4</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+	</Params>
+	<QActions>
+		<QAction id="2" name="After Startup" encoding="csharp" triggers="2">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Skyline.DataMiner.Scripting;
+using Interop.SLDms;
+
+/// <summary>
+/// DataMiner QAction Class: After Startup.
+/// </summary>
+public class QAction
+{
+	/// <summary>
+	/// The QAction entry point.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol process.</param>
+	public static void Run(SLProtocol protocol)
+	{
+		try
+		{
+			string ip_address_str = "";
+			string xml_feed_url = "";
+			int agent_ID = protocol.DataMinerID;
+			int element_ID = protocol.ElementID;
+			string[] element_info_str;
+			object[] elementDetails = new object[3];
+			object data = new object();
+			object[] elements;
+			object[] elementInfo;
+
+
+			DMS dms = new DMS();
+			elementDetails[0] = agent_ID;
+			elementDetails[1] = element_ID;
+			elementDetails[2] = null;
+
+			data = (object)elementDetails;
+
+			dms.GetInfo(8, 0, ref data);
+
+			elements = (object[])data;
+			elementInfo = (object[])elements[0];
+			element_info_str = (string[])elementInfo[0];
+
+			ip_address_str = Convert.ToString(element_info_str[29]);
+			xml_feed_url = "http://" + ip_address_str + "/xmlfeed.rb";
+
+			protocol.SetParameter(1, xml_feed_url);
+		}
+		catch (Exception ex)
+		{
+			protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+		}
+	}
+}]]>
+		</QAction>
+		<QAction id="3" name="XML information update" encoding="csharp" triggers="20" dllImport="System.Xml.dll">
+			<![CDATA[using System;
+using System.IO;
+using Skyline.DataMiner.Scripting;
+using System.Xml;
+using System.Xml.Serialization;
+
+/// <summary>
+/// DataMiner QAction Class: After Startup.
+/// </summary>
+public class QAction
+{
+	/// <summary>
+	/// The QAction entry point.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol process.</param>
+	public static void Run(SLProtocolExt protocol)
+	{
+		try
+		{
+			if (Convert.ToString(protocol.GetParameter(10)) == "HTTP/1.1 200 OK")
+			{
+
+				CurrentCondition currentCond = new CurrentCondition();
+				Condition[] condition_port1 = new Condition[2];
+				condition_port1[0] = new Condition();
+				condition_port1[1] = new Condition();
+
+				Condition[] condition_port2 = new Condition[2];
+				condition_port2[0] = new Condition();
+				condition_port2[1] = new Condition();
+
+				Condition[] condition_port3 = new Condition[2];
+				condition_port2[0] = new Condition();
+				condition_port2[1] = new Condition();
+
+				Condition[] condition_port4 = new Condition[2];
+				condition_port2[0] = new Condition();
+				condition_port2[1] = new Condition();
+
+				//Port[] prt = new Port[2];
+				//prt[0] = new Port();
+				//prt[1] = new Port();
+				//Ports prts = new Ports();
+
+				Port[] prt = new Port[4];
+				prt[0] = new Port();
+				prt[1] = new Port();
+				prt[2] = new Port();
+				prt[3] = new Port();
+				Ports prts = new Ports();
+
+				prt[0].condition = condition_port1;
+
+				prt[1].condition = condition_port2;
+
+				prt[2].condition = condition_port3;
+
+				prt[3].condition = condition_port4;
+
+				prts.port = prt;
+
+				currentCond.ports = prts;
+
+				string xmlString = Convert.ToString(protocol.GetParameter(20));
+
+				StringReader stringReader = new StringReader(xmlString);
+
+				XmlSerializer deserializer = new XmlSerializer(typeof(CurrentCondition), new XmlRootAttribute("currentConditions"));
+
+				currentCond = (CurrentCondition)deserializer.Deserialize(stringReader);
+
+				protocol.SetParameter(3, currentCond.deviceName);
+				protocol.SetParameter(4, currentCond.readingDateTime);
+				protocol.SetParameter(5, currentCond.tempUnits);
+
+				protocol.SetParameter(6, currentCond.ports.port[0]._name);
+				protocol.SetParameter(7, currentCond.ports.port[0].condition[0].currentReading);
+				protocol.SetParameter(8, currentCond.ports.port[0].condition[1].currentReading);
+				protocol.SetParameter(11, currentCond.ports.port[0].condition[0].lowLimit);
+				protocol.SetParameter(12, currentCond.ports.port[0].condition[0].highLimit);
+				protocol.SetParameter(13, currentCond.ports.port[0].condition[1].lowLimit);
+				protocol.SetParameter(14, currentCond.ports.port[0].condition[1].highLimit);
+
+				protocol.SetParameter(16, currentCond.ports.port[1]._name);
+				protocol.SetParameter(17, currentCond.ports.port[1].condition[0].currentReading);
+				protocol.SetParameter(18, currentCond.ports.port[1].condition[1].currentReading);
+				protocol.SetParameter(21, currentCond.ports.port[1].condition[0].lowLimit);
+				protocol.SetParameter(22, currentCond.ports.port[1].condition[0].highLimit);
+				protocol.SetParameter(23, currentCond.ports.port[1].condition[1].lowLimit);
+				protocol.SetParameter(24, currentCond.ports.port[1].condition[1].highLimit);
+
+				protocol.SetParameter(30, currentCond.ports.port[2]._name);
+				protocol.SetParameter(31, currentCond.ports.port[2].condition[0].currentReading);
+				protocol.SetParameter(32, currentCond.ports.port[2].condition[1].currentReading);
+				protocol.SetParameter(34, currentCond.ports.port[2].condition[0].lowLimit);
+				protocol.SetParameter(35, currentCond.ports.port[2].condition[0].highLimit);
+				protocol.SetParameter(36, currentCond.ports.port[2].condition[1].lowLimit);
+				protocol.SetParameter(37, currentCond.ports.port[2].condition[1].highLimit);
+
+				protocol.SetParameter(39, currentCond.ports.port[3]._name);
+				protocol.SetParameter(40, currentCond.ports.port[3].condition[0].currentReading);
+				protocol.SetParameter(41, currentCond.ports.port[3].condition[1].currentReading);
+				protocol.SetParameter(43, currentCond.ports.port[3].condition[0].lowLimit);
+				protocol.SetParameter(44, currentCond.ports.port[3].condition[0].highLimit);
+				protocol.SetParameter(45, currentCond.ports.port[3].condition[1].lowLimit);
+				protocol.SetParameter(46, currentCond.ports.port[3].condition[1].highLimit);
+
+				protocol.SetParameter(26, currentCond.ports.port[0]._number);
+				protocol.SetParameter(27, currentCond.ports.port[1]._number);
+				protocol.SetParameter(28, currentCond.ports.port[2]._number);
+				protocol.SetParameter(29, currentCond.ports.port[3]._number);
+
+				if (currentCond.ports.port[0].condition[0].alarmStatus == 0)
+				{
+					protocol.SetParameter(9, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(9, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[0].condition[1].alarmStatus == 0)
+				{
+					protocol.SetParameter(15, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(15, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[1].condition[0].alarmStatus == 0)
+				{
+					protocol.SetParameter(19, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(19, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[1].condition[1].alarmStatus == 0)
+				{
+					protocol.SetParameter(25, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(25, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[2].condition[0].alarmStatus == 0)
+				{
+					protocol.SetParameter(33, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(33, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[2].condition[1].alarmStatus == 0)
+				{
+					protocol.SetParameter(38, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(38, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[3].condition[0].alarmStatus == 0)
+				{
+					protocol.SetParameter(42, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(42, "Active Alarm!");
+				}
+
+				if (currentCond.ports.port[3].condition[1].alarmStatus == 0)
+				{
+					protocol.SetParameter(47, "Normal");
+				}
+				else
+				{
+					protocol.SetParameter(47, "Active Alarm!");
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+		}
+	}
+}
+public class Condition
+{
+	[XmlElement("currentReading")]
+	public double currentReading { get; set; }
+	[XmlElement("highLimit")]
+	public double highLimit { get; set; }
+	[XmlElement("lowLimit")]
+	public double lowLimit { get; set; }
+	[XmlElement("alarmStatus")]
+	public int alarmStatus { get; set; }
+	[XmlElement("prevAlarmStatus")]
+	public int prevAlarmStatus { get; set; }
+	[XmlAttribute("type")]
+	public string _type { get; set; }
+}
+public class Port
+{
+	[XmlElement("condition")]
+	public Condition[] condition { get; set; }
+	[XmlAttribute("name")]
+	public string _name { get; set; }
+	[XmlAttribute("number")]
+	public int _number { get; set; }
+}
+public class Ports
+{
+	[XmlElement("port")]
+	public Port[] port { get; set; } 
+}
+public class CurrentCondition
+{
+	[XmlElement("deviceName")]
+	public string deviceName { get; set; }
+	[XmlElement("readingDateTime")]
+	public string readingDateTime { get; set; }
+	[XmlElement("tempUnits")]
+	public string tempUnits { get; set; }
+	[XmlElement("form")]
+	public string form { get; set; }
+	[XmlElement("ports")]
+	public Ports ports { get; set; }
+	[XmlElement("errorReadingSensor")]
+	public int errorReadingSensor { get; set; }
+}]]>
+		</QAction>
+	</QActions>
+	<HTTP>
+		<Session id="1" name="FeedGetXML">
+			<Connection id="3" name="Get current temperature amd humidity XML">
+				<Request verb="GET" pid="1">
+					<Headers>
+						<Header key="Content-Type">application/xml</Header>
+					</Headers>
+				</Request>
+				<Response statusCode="10">
+					<Content pid="20"></Content>
+				</Response>
+			</Connection>
+		</Session>
+	</HTTP>
+	<Groups>
+		<Group id="1">
+			<Name>Get XML feed</Name>
+			<Description>Get XML feed</Description>
+			<Type>poll</Type>
+			<Content>
+				<Session>1</Session>
+			</Content>
+		</Group>
+		<Group id="2">
+			<Name>After Startup</Name>
+			<Description>After Startup</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>2</Action>
+			</Content>
+		</Group>
+	</Groups>
+	<Triggers>
+		<Trigger id="1">
+			<Name>After Startup</Name>
+			<On>protocol</On>
+			<Time>after startup</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>1</Id>
+			</Content>
+		</Trigger>
+	</Triggers>
+	<Actions>
+		<Action id="1">
+			<Name>After Startup Group</Name>
+			<On id="2">group</On>
+			<Type>execute next</Type>
+		</Action>
+		<Action id="2">
+			<Name>After Startup QAction</Name>
+			<On id="2">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+	</Actions>
+	<Timers>
+		<Timer id="1">
+			<Name>Fast Timer (10s)</Name>
+			<Time initial="true">10000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>1</Group>
+			</Content>
+		</Timer>
+		<Timer id="2">
+			<Name>Medium Timer (1m)</Name>
+			<Time initial="true" dataDisplay="30000">60000</Time>
+			<Interval>75</Interval>
+			<Content>
+			</Content>
+		</Timer>
+		<Timer id="3">
+			<Name>Slow Timer (1h)</Name>
+			<Time initial="true">3600000</Time>
+			<Interval>75</Interval>
+			<Content>
+			</Content>
+		</Timer>
+	</Timers>
+	<PortSettings name="HTTP Connection">
+		<BusAddress>
+			<DefaultValue>ByPassProxy</DefaultValue>
+			<Disabled>false</Disabled>
+		</BusAddress>
+		<IPport>
+			<DefaultValue>80</DefaultValue>
+			<Disabled>false</Disabled>
+		</IPport>
+		<PortTypeSerial>
+			<Disabled>true</Disabled>
+		</PortTypeSerial>
+		<PortTypeUDP>
+			<Disabled>false</Disabled>
+		</PortTypeUDP>
+	</PortSettings>
+</Protocol>

@@ -1,0 +1,3294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+****************************************************************************
+*  Copyright (c) 2022,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+By using this driver, you expressly agree with the usage terms and
+conditions set out below.
+This driver and all related materials are protected by copyrights and
+other intellectual property rights that exclusively belong
+to Skyline Communications.
+
+A user license granted for this driver is strictly for personal use only.
+This driver may not be used in any way by anyone without the prior
+written consent of Skyline Communications. Any sublicensing of this
+driver is forbidden.
+
+Any modifications to this driver by the user are only allowed for
+personal use and within the intended purpose of the driver,
+and will remain the sole responsibility of the user.
+Skyline Communications will not be responsible for any damages or
+malfunctions whatsoever of the driver resulting from a modification
+or adaptation by the user.
+
+The content of this driver is confidential information.
+The user hereby agrees to keep this confidential information strictly
+secret and confidential and not to disclose or reveal it, in whole
+or in part, directly or indirectly to any person, entity, organization
+or administration without the prior written consent of
+Skyline Communications.
+
+Any inquiries can be addressed to:
+
+	Skyline Communications NV
+	Ambachtenstraat 33
+	B-8870 Izegem
+	Belgium
+	Tel.	: +32 51 31 35 69
+	Fax.	: +32 51 31 01 29
+	E-mail	: info@skyline.be
+	Web		: www.skyline.be
+	Contact	: Ben Vandenberghe
+
+
+
+Revision History (auto generated):
+
+DATE    VERSION    AUTHOR                      COMMENTS
+
+        1.0.0.1    , Skyline Communications    NF: Initial version
+
+
+Revision History (auto generated):
+
+DATE    VERSION    AUTHOR                      COMMENTS
+
+        1.0.0.1    , Skyline Communications    NF: Initial version
+
+
+Revision History (auto generated):
+
+DATE    VERSION    AUTHOR                      COMMENTS
+
+        1.0.0.1    , Skyline Communications    NF: Initial version
+-->
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>Powershield DA0902</Name>
+	<Description>Powershield DA0902 DataMiner driver</Description>
+	<Version>1.0.0.1</Version>
+	<IntegrationID>DMS-DRV-XXXX</IntegrationID>
+	<Provider/>
+	<Vendor/>
+	<VendorOID>1.3.6.1.4.1.43943.1.1.1</VendorOID>
+	<DeviceOID/>
+	<ElementType>UPS</ElementType>
+	<Type relativeTimers="true">snmp</Type>
+	<Display defaultPage="General" pageOrder="General;Webinterface#http://[Polling Ip];Alerts &amp; Notifications" wideColumnPages=""/>
+	<SNMP includepages="true">auto</SNMP>
+	<Compliancies>
+		<CassandraReady>true</CassandraReady>
+	</Compliancies>
+	<Params>
+		<Param id="2">
+			<Name>AfterStartup</Name>
+			<Description>After Startup</Description>
+			<Type>dummy</Type>
+		</Param>
+		<Param id="11">
+			<Name>Remove All Rows</Name>
+			<Description/>
+			<Information>
+				<Text>This action will also reset the Alarm Status</Text>
+			</Information>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Alerts &amp; Notifications</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Delete all traps</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="20">
+			<Name>TrapReceiver</Name>
+			<Description>TrapReceiver</Description>
+			<Type>dummy</Type>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<TrapOID setBindings="allBindingInfo" type="wildcard">*</TrapOID>
+			</SNMP>
+		</Param>
+		<Param id="30" trending="false" save="true">
+			<Name>TrapsProcessingToggleButton</Name>
+			<Description>Trap Processing</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>1</DefaultValue>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Alerts &amp; Notifications</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>togglebutton</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="31" trending="false" save="true">
+			<Name>TrapsProcessingToggleButton</Name>
+			<Description>Trap Processing</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>1</DefaultValue>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Alerts &amp; Notifications</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>togglebutton</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="100" trending="false">
+			<Name>sysUpTime</Name>
+			<Description>System Up Time</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The time (in hundredths of a second) since the
+network management portion of the system was last
+re-initialized.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:100</Sequence>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.2.1.1.3.0</OID>
+				<Type>timeticks</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="time">number</Type>
+			</Measurement>
+		</Param>
+		<Param id="101" trending="false">
+			<Name>Contact</Name>
+			<Description>Contact</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The textual identification of the contact person for
+this managed node, together with information on how
+to contact this person.  If no contact information is
+known, the value is the zero-length string.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.2.1.1.4.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="102" trending="false">
+			<Name>SystemName</Name>
+			<Description>System Name</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[An administratively-assigned name for this managed
+node.  By convention, this is the node's fully-qualified
+domain name.  If the name is unknown, the value is
+the zero-length string.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.2.1.1.5.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="103" trending="false">
+			<Name>Location</Name>
+			<Description>Location</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The physical location of this node (e.g., 'telephone
+closet, 3rd floor').  If the location is unknown, the
+value is the zero-length string.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.2.1.1.6.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="104" trending="false">
+			<Name>upsIdentName</Name>
+			<Description>UPS Ident Name</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[A string identifying the UPS.  This object should be
+set by the administrator.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.2.1.33.1.1.5.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>63</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="120" trending="false">
+			<Name>Manufacturer</Name>
+			<Description>Manufacturer</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The name of the UPS manufacturer.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.1.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>31</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="121" trending="false">
+			<Name>Protocol</Name>
+			<Description>Protocol</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The UPS Protocol id.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.2.0</OID>
+				<Type>integer</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>9</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Unknown</Display>
+						<Value>-1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Pmv</Display>
+						<Value>99</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 00</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 01</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 02</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 03</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 04</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 05</Display>
+						<Value>5</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 06</Display>
+						<Value>6</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 07</Display>
+						<Value>7</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 08</Display>
+						<Value>8</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 09</Display>
+						<Value>9</Value>
+					</Discreet>
+					<Discreet>
+						<Display>P 10</Display>
+						<Value>10</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Sec</Display>
+						<Value>80</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="122" trending="false">
+			<Name>ModelName</Name>
+			<Description>Model Name</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The UPS Model designation.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.3.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>15</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>10</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="123" trending="false">
+			<Name>SerialNumber</Name>
+			<Description>Serial Number</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The UPS serial no.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.4.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>31</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>11</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="125" trending="false">
+			<Name>FWVersion</Name>
+			<Description>FW Version</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[Main CPU firmware version.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.6.0</OID>
+				<Type>octetstring</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>31</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>12</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="126" trending="false">
+			<Name>UPSType</Name>
+			<Description>UPS Type</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[UPS type.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.1.7.0</OID>
+				<Type>integer</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>13</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Standy</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Line Interactive</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On Line</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="200" trending="true">
+			<Name>UPSRatingInputVoltage</Name>
+			<Description>UPS Rating Input Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating input voltage of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.1.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="201" trending="true">
+			<Name>UPSRatingOutputVoltage</Name>
+			<Description>UPS Rating Output Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating output voltage of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.2.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="202" trending="true">
+			<Name>UPSRatingOutputFrequency</Name>
+			<Description>UPS Rating Output Frequency</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating output frequency of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.3.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Hz</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="203" trending="true">
+			<Name>UPSRatingOutputCurrent</Name>
+			<Description>UPS Rating Output Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating output current of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.4.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>9</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="204" trending="true">
+			<Name>UPSRatingOutputApparentPower</Name>
+			<Description>UPS Rating Output Apparent Power</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating output apparent power of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.5.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>10</Row>
+					</Position>
+				</Positions>
+				<Units>VA</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="205" trending="true">
+			<Name>UPSRatingOutputTruePower</Name>
+			<Description>UPS Rating Output True Power</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating output true power of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.6.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>VA</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>11</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="206" trending="true">
+			<Name>UPSRatingBatteryVoltage</Name>
+			<Description>UPS Rating Battery Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The rating battery voltage of UPS]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.2.7.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>12</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="300" trending="false">
+			<Name>AlarmsAndNotications</Name>
+			<Description>System Alarms and Notifcations</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<ColumnOption idx="0" pid="301" type="autoincrement" options=";save"/>
+				<ColumnOption idx="1" pid="302" type="retrieved" options=";save"/>
+				<ColumnOption idx="2" pid="303" type="retrieved" options=";save"/>
+				<ColumnOption idx="3" pid="304" type="retrieved" options=";save"/>
+				<ColumnOption idx="4" pid="305" type="retrieved" options=";save"/>
+			</ArrayOptions>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Alerts &amp; Notifications</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:301|0-302|1-303|2-304|3-305|4,width:182-150-100-500-100,sort:STRING-STRING-STRING-STRING-STRING,lines:20,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="301" trending="false">
+			<Name>IndexAlarmsNotications</Name>
+			<Description>Alarms Notifications [IDX]</Description>
+			<Information>
+				<Includes>
+					<Include>time</Include>
+					<Include>range</Include>
+					<Include>steps</Include>
+					<Include>units</Include>
+				</Includes>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="302" trending="false">
+			<Name>Time</Name>
+			<Description>Time</Description>
+			<Information>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="303" trending="false">
+			<Name>IPAddress</Name>
+			<Description>IP address</Description>
+			<Information>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>false</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="304" trending="false">
+			<Name>Message</Name>
+			<Description>Message</Description>
+			<Information>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="305">
+			<Name>Delete trap</Name>
+			<Description>Delete trap</Description>
+			<Information>
+			</Information>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Delete</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="400" trending="false">
+			<Name>UPSBatteryStatus</Name>
+			<Description>UPS Battery Status</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The indication of the status in the UPS system's batteries.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.1.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>16</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Unknown</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Normal</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Low</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Depleted</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Discharging</Display>
+						<Value>5</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Failure</Display>
+						<Value>6</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Battery Replace</Display>
+						<Value>7</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Batterysilence</Display>
+						<Value>8</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="401" trending="false">
+			<Name>UPSBatterySecondsOnBattery</Name>
+			<Description>UPS Battery Seconds On Battery</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[If the unit is on battery power, the elapsed time
+since the UPS last switched to battery power, or the
+time since the network management subsystem was last
+restarted, whichever is less.  -1 shall be returned
+if the unit is not on battery power.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.2.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>seconds</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>17</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="402" trending="true">
+			<Name>UPSBatteryEstimateMinutesRemaining</Name>
+			<Description>UPS Battery Estimate Minutes Remaining</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[An estimate of the time to battery charge depletion
+under the present load conditions if the utility power
+is off and remains off, or if it were to be lost and
+remain off.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.3.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>minutes</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>18</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="403" trending="true">
+			<Name>UPSBatteryEstimateChargeRemaining</Name>
+			<Description>UPS Battery Estimate Charge Remaining</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[An estimate of the battery charge remaining expressed
+as a percent of full charge.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.4.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>19</Row>
+					</Position>
+				</Positions>
+				<Range>
+					<Low>1</Low>
+					<High>100</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>progress</Type>
+			</Measurement>
+		</Param>
+		<Param id="404" trending="true">
+			<Name>UPSBatteryPresentBatteryVoltage</Name>
+			<Description>UPS Battery Present Battery Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The magnitude of the  present Positive battery voltage.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.5.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>20</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="405" trending="true">
+			<Name>UPSBatteryPresentNegativeBatteryVoltage</Name>
+			<Description>UPS Battery Present Negative Battery Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The magnitude of the present negative battery voltage.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.6.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>21</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="406" trending="true">
+			<Name>UPSBatteryPresentPositiveBatteryCurrent</Name>
+			<Description>UPS Battery Present Positive Battery Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The positive battery present  current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.7.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>22</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="407" trending="true">
+			<Name>UPSBatteryPresentNegativeBatteryCurrent</Name>
+			<Description>UPS Battery Present Negative Battery Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present negative battery current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.8.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>23</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="408" trending="true">
+			<Name>UPSPositiveBatteryChargingCurrent</Name>
+			<Description>UPS Positive Battery Charging Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The Positive battery charging  current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.9.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>24</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="409" trending="true">
+			<Name>UPSNegativeBatteryChargingCurrent</Name>
+			<Description>UPS Negative Battery Charging Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present negative battery charging  current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.10.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>25</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="410" trending="true">
+			<Name>UPSBatteryPositiveBatteryDischargingCurrent</Name>
+			<Description>UPS Battery Positive Battery Discharging Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present positive battery discharging current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.11.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>26</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="411" trending="true">
+			<Name>UPSBatteryNegativeBatteryDischargingCurrent</Name>
+			<Description>UPS Battery Negative Battery Discharging Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present negative battery discharging current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.12.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>27</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="412" trending="true">
+			<Name>UPSBatteryTemperature</Name>
+			<Description>UPS Battery Temperature</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The ambient temperature at or near the UPS Battery
+casing.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">min:32;*:5556;div:10000</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.13.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>deg C</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>28</Row>
+					</Position>
+				</Positions>
+				<Decimals>2</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="413" trending="false">
+			<Name>UPSBatteryNumberInSeries</Name>
+			<Description>UPS Battery Number In Series</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The number of battery in series.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.14.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>29</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="414" trending="false">
+			<Name>UPSBatteryNumberInParallel</Name>
+			<Description>UPS Battery Number In Parallel</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The number of battery in Parallel.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.15.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>30</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="415" trending="true">
+			<Name>UPSBatteryPostiveBatteryDischargingCurrent</Name>
+			<Description>UPS Battery Postive Battery Discharging Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present positive battery pipe2 discharging current.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.3.16.0</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>31</Row>
+					</Position>
+				</Positions>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="500" trending="false">
+			<Name>UPSInputTable</Name>
+			<Description>UPS Input Table</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<ColumnOption idx="0" pid="501" type="snmp" cpeAlignment="left" options=""/>
+				<ColumnOption idx="1" pid="502" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="2" pid="503" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+			</ArrayOptions>
+			<Information>
+				<Subtext>
+					<![CDATA[A list of input table entries.  The number of entries
+is given by the value of upsInputNumLines.]]>
+				</Subtext>
+			</Information>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete" options="instance;multipleGetNext">1.3.6.1.4.1.43943.1.1.4.5</OID>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:501|0-502|1-503|2,width:140-201-148,sort:INT-INT-INT,lines:20,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="501" trending="false">
+			<Name>UPSInputLineIndex</Name>
+			<Description>Input Line IDX</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[This is the SNMP instance of the table. Format: [upsInLineIndex].
+
+ - upsInLineIndex: The number of output lines
+]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="502" trending="true">
+			<Name>UPSPresentInputFrequency</Name>
+			<Description>Preset Input Line Frequency</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present input frequency.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.4.5.1.2</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Hz</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="503" trending="true">
+			<Name>UPSInputLineVoltage</Name>
+			<Description>Input Line Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The input utility line voltage .]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.4.5.1.3</OID>
+				<Type>integer</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="600" trending="false">
+			<Name>IPSOutputTable</Name>
+			<Description>UPS Output Table</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<ColumnOption idx="0" pid="601" type="snmp" cpeAlignment="center" options=""/>
+				<ColumnOption idx="1" pid="602" type="snmp" cpeAlignment="center" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="2" pid="603" type="snmp" cpeAlignment="center" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="3" pid="604" type="snmp" cpeAlignment="center" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="4" pid="605" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="5" pid="606" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="6" pid="607" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="7" pid="608" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+				<ColumnOption idx="8" pid="609" type="snmp" cpeAlignment="left" options=";enableHeaderAvg;enableHistogram;enableHeatmap"/>
+			</ArrayOptions>
+			<Information>
+				<Subtext>
+					<![CDATA[A list of output table entries.  The number of
+entries is given by the value of upsOutputNumLines.]]>
+				</Subtext>
+			</Information>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete" options="instance;multipleGetNext">1.3.6.1.4.1.43943.1.1.5.7</OID>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:601|0-602|1-603|2-604|3-605|4-606|5-607|6-608|7-609|8,width:124-105-105-153-125-135-131-132-120,sort:INT-INT-INT-INT-INT-INT-INT-INT-INT,lines:20,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="601" trending="false">
+			<Name>UPSOutputLineIndex</Name>
+			<Description>Output Line IDX</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[This is the SNMP instance of the table. Format: [upsOutLineIndex].
+
+ - upsOutLineIndex: The output line identifier.
+]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="602" trending="true">
+			<Name>UPSOutputVoltage</Name>
+			<Description>Output Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The output voltage of the UPS system.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.2</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="603" trending="true">
+			<Name>UPSOutputCurrent</Name>
+			<Description>Output Current</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The output current of the UPS system]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.3</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>A</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="604" trending="true">
+			<Name>UPSOutputApparentPower</Name>
+			<Description>Output Apparent Power</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present output apparent power.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.4</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>VA</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="605" trending="true">
+			<Name>UPSOutputTruePower</Name>
+			<Description>Output True Power</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present output true power.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.5</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>VA</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="606" trending="true">
+			<Name>UPSOutputPowerFactor</Name>
+			<Description>Output Power Factor</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[Output true power/apparent power factor]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.6</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="607" trending="true">
+			<Name>UPSOutputPercentLoad</Name>
+			<Description>Ouput Percent Load</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The percentage of the UPS power capacity presently
+being used on this output line, i.e., the greater of
+the percent load of true power capacity and the
+percent load of VA.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.7</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="608" trending="true">
+			<Name>UPSOutputLineVoltage</Name>
+			<Description>Output Line Voltage</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The output line voltage of the UPS system.
+if upsOutLineIndex =1, upsOutLineVoltage = Line voltage of RS phase;
+if upsOutLineIndex =2, upsOutLineVoltage = Line voltage of ST phase;
+if upsOutLineIndex =3, upsOutLineVoltage = Line voltage of TR phase.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.8</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>V</Units>
+				<Decimals>1</Decimals>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="609" trending="true">
+			<Name>UPSOutputFrequency</Name>
+			<Description>Output Frequency</Description>
+			<Information>
+				<Subtext>
+					<![CDATA[The present output frequency.]]>
+				</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">div:10</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<SNMP>
+				<Enabled>true</Enabled>
+				<OID type="complete">1.3.6.1.4.1.43943.1.1.5.7.1.9</OID>
+				<Type>integer32</Type>
+			</SNMP>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Hz</Units>
+				<Decimals>1</Decimals>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1000">
+			<Name>UPSRatingBegin</Name>
+			<Description>UPS Rating</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1001">
+			<Name>UPSRatingEnd</Name>
+			<Description/>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<!--Note that by adding multiple positions,
+					the same title end can be re-used for closing different group boxes.
+					Indeed, Cube only uses the positions in order to potentially group a title begin to a title end.-->
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>13</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="end">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1003">
+			<Name>UPSBatteryInformationBegin</Name>
+			<Description>UPS Battery Information</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>15</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1004">
+			<Name>UPSBatteryInformationEnd</Name>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<!--Note that by adding multiple positions,
+					the same title end can be re-used for closing different group boxes.
+					Indeed, Cube only uses the positions in order to potentially group a title begin to a title end.-->
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>32</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="end">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1005">
+			<Name>UPSSystemInformationBegin</Name>
+			<Description>UPS System Information</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1006">
+			<Name>SystemInformationEnd</Name>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<!--Note that by adding multiple positions,
+					the same title end can be re-used for closing different group boxes.
+					Indeed, Cube only uses the positions in order to potentially group a title begin to a title end.-->
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>14</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="end">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1007">
+			<Name>UPSInputAndOutputTableBegin</Name>
+			<Description>UPS Input Output Tables</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1008">
+			<Name>UPSInputAndOutputTableEnd</Name>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<!--Note that by adding multiple positions,
+					the same title end can be re-used for closing different group boxes.
+					Indeed, Cube only uses the positions in order to potentially group a title begin to a title end.-->
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="end">title</Type>
+			</Measurement>
+		</Param>
+	</Params>
+	<QActions>
+		<QAction id="63000" encoding="csharp" name="** Auto-generated Class Library **" options="precompile">
+			<![CDATA[// <auto-generated>This is auto-generated code by DIS. Do not modify.</auto-generated>
+
+/*
+{{StartPackageInfo}}
+<PackageInfo xmlns="http://www.skyline.be/ClassLibrary">
+	<BasePackage>
+		<Identity>
+			<Name>Class Library</Name>
+			<Version>1.4.0.1</Version>
+		</Identity>
+	</BasePackage>
+	<CustomPackages />
+</PackageInfo>
+{{EndPackageInfo}}
+*/
+
+namespace Skyline.DataMiner.Library.Protocol.Snmp.Trap
+{
+    /// <summary>
+    /// Represents a keyed collection of trap variable bindings.
+    /// </summary>
+    internal class TrapInfoVariableBindingCollection : System.Collections.ObjectModel.KeyedCollection<System.String, Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding>
+    {
+        /// <summary>
+        /// Extracts the key from the specified element.
+        /// </summary>
+        /// <param name = "item">The element from which to extract the key.</param>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "item"/> is <see langword = "null"/>.</exception>
+        /// <returns>The key for the specified element.</returns>
+        protected override string GetKeyForItem(Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding item)
+        {
+            if (item != null)
+            {
+                return item.Oid;
+            }
+            else
+            {
+                throw new System.ArgumentNullException("item");
+            }
+        }
+
+        /// <summary>
+        /// Gets the trap variable binding associated with the specified OID.
+        /// </summary>
+        /// <param name = "oid">The OID of the trap variable binding to get.</param>
+        /// <param name = "variableBinding">When this method returns, contains the value associated with the specified OID, if the OID is found; otherwise, <see langword = "null"/>.
+        /// This parameter is passed uninitialized.</param>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "oid"/> is <see langword = "null"/>.</exception>
+        /// <returns><c>true</c> if the collection contains a trap variable binding with the specified OID; otherwise <c>false</c>.</returns>
+        public bool TryGetValue(string oid, out Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding variableBinding)
+        {
+            return this.Dictionary.TryGetValue(oid, out variableBinding);
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return string.Join(System.Environment.NewLine, this.Items);
+        }
+    }
+
+    /// <summary>
+    /// Represents a read-only collection of trap variable bindings.
+    /// </summary>
+    public class ReadOnlyTrapInfoVariableBindingCollection : System.Collections.ObjectModel.ReadOnlyCollection<Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding>
+    {
+        readonly Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection trapInfoVariableBindings;
+        internal ReadOnlyTrapInfoVariableBindingCollection(Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection trapInfoVariableBindings): base(trapInfoVariableBindings)
+        {
+            if (trapInfoVariableBindings == null)
+            {
+                throw new System.ArgumentNullException("trapInfoVariableBindings");
+            }
+
+            this.trapInfoVariableBindings = trapInfoVariableBindings;
+        }
+
+        /// <summary>
+        /// Gets the variable binding with the specified OID.
+        /// </summary>
+        /// <param name = "oid">The OID of the trap variable binding to get.</param>
+        /// <value>The trap variable binding with the specified OID. If a trap variable binding with the specified OID is not found, an exception is thrown.</value>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "oid"/> is <see langword = "null"/>.</exception>
+        /// <exception cref = "System.Collections.Generic.KeyNotFoundException">An element with the specified key does not exist in the collection.</exception>
+        /// <example>
+        /// <code>
+        /// TrapInfoBinding binding = trapBindingCollection["1.1.1"];
+        /// </code>
+        /// </example>
+        public Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding this[string oid]
+        {
+            get
+            {
+                return this.trapInfoVariableBindings[oid];
+            }
+        }
+
+        /// <summary>
+        /// Gets the trap variable binding associated with the specified OID.
+        /// </summary>
+        /// <param name = "oid">The OID of the trap variable binding to get.</param>
+        /// <param name = "variableBinding">When this method returns, contains the value associated with the specified OID, if the OID is found; otherwise, <see langword = "null"/>. This parameter is passed uninitialized.</param>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "oid"/> is <see langword = "null"/>.</exception>
+        /// <returns><c>true</c> if the collection contains a trap variable binding with the specified OID; otherwise <c>false</c>.</returns>
+        public bool TryGetValue(string oid, out Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding variableBinding)
+        {
+            return trapInfoVariableBindings.TryGetValue(oid, out variableBinding);
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return string.Join(System.Environment.NewLine, this.Items);
+        }
+    }
+
+    /// <summary>
+    /// Represents all the info as received from a trap in a protocol that has the TrapOID@setBindings attribute set to "allBindingInfo".
+    /// </summary>
+    public class TrapInfo
+    {
+        private readonly string oid;
+        private readonly System.Net.IPAddress source;
+        private readonly System.DateTime receivedTime;
+        private readonly Skyline.DataMiner.Library.Protocol.Snmp.Trap.ReadOnlyTrapInfoVariableBindingCollection variableBindings;
+        internal TrapInfo(string oid, System.Net.IPAddress source, int ticks, Skyline.DataMiner.Library.Protocol.Snmp.Trap.ReadOnlyTrapInfoVariableBindingCollection variableBindings)
+        {
+            if (source == null)
+            {
+                throw new System.ArgumentNullException("source");
+            }
+
+            if (variableBindings == null)
+            {
+                throw new System.ArgumentNullException("variableBindings");
+            }
+
+            if (System.String.IsNullOrWhiteSpace(oid))
+            {
+                throw new System.ArgumentException("The OID cannot be null, empty or white space.", "oid");
+            }
+
+            this.oid = oid;
+            this.source = source;
+            this.variableBindings = variableBindings;
+            int ticksDifference;
+            {
+                int currentTimeTicks = System.Environment.TickCount & System.Int32.MaxValue; // Make sure negative numbers aren't used.
+                int trapTimeTicks = ticks & System.Int32.MaxValue; // Make sure negative numbers aren't used.
+                if (currentTimeTicks >= trapTimeTicks)
+                {
+                    ticksDifference = currentTimeTicks - trapTimeTicks;
+                }
+                else
+                {
+                    ticksDifference = (int.MaxValue - trapTimeTicks) + currentTimeTicks + 1;
+                }
+            }
+
+            receivedTime = System.DateTime.Now.AddMilliseconds(-ticksDifference);
+        }
+
+        /// <summary>
+        /// Gets the variable bindings of this trap.
+        /// </summary>
+        /// <value>The variable bindings.</value>
+        public Skyline.DataMiner.Library.Protocol.Snmp.Trap.ReadOnlyTrapInfoVariableBindingCollection VariableBindings
+        {
+            get
+            {
+                return variableBindings;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trap OID.
+        /// </summary>
+        /// <value>The trap OID.</value>
+        public string Oid
+        {
+            get
+            {
+                return oid;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trap source IP address.
+        /// </summary>
+        /// <value>The trap source IP address.</value>
+        public System.Net.IPAddress Source
+        {
+            get
+            {
+                return source;
+            }
+        }
+
+        /// <summary>
+        /// Gets the time when the trap was received in the SLSNMPManager process.
+        /// </summary>
+        /// <value>The time when the trap was received in the SLSNMPManager process.</value>
+        /// <remarks>This value is calculated based on a tick count (representing the number of milliseconds that have elapsed since the system was started at the moment the trap was received in the SLSNMPManager process).
+        /// This tick count will wrap around to zero if the system is run continuously for 24.9 days.</remarks>
+        public System.DateTime ReceivedTime
+        {
+            get
+            {
+                return receivedTime;
+            }
+        }
+
+        /// <summary>
+        /// Parses the trap object received from SLProtocol into a TrapInfo object.
+        /// </summary>
+        /// <param name = "trapInfo">The trap info object when the TrapOID@setBindings attribute set to "allBindingInfo".</param>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "trapInfo"/> is <see langword = "null"/>.</exception>
+        /// <exception cref = "System.ArgumentException"><paramref name = "trapInfo"/> is invalid.</exception>
+        /// <returns>An object of type TrapInfo.</returns>
+        /// <example>
+        /// <code>
+        /// TrapInfo trap = TrapInfo.FromTrapData(trapInfo);
+        /// </code>
+        /// </example>
+        public static Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfo FromTrapData(object trapInfo)
+        {
+            return Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoParser.Parse(trapInfo);
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("Trap[OID: ");
+            sb.Append(Oid);
+            sb.Append(", Source: ");
+            sb.Append(Source);
+            sb.Append(", Received: ");
+            sb.Append(ReceivedTime);
+            sb.Append("Variable binding count: " + VariableBindings.Count);
+            sb.Append("]" + System.Environment.NewLine);
+            return sb.ToString();
+        }
+    }
+
+    internal class TrapInfoParser
+    {
+        private TrapInfoParser()
+        {
+        }
+
+        /// <summary>
+        /// Parses the object returned from SLProtocol when using allBindingInfo on a parameter in a DataMiner Protocol.
+        /// </summary>
+        /// <param name = "trapInfo">The object returned from SLProtocol when using allBindingInfo on a parameter in a DataMiner Protocol.</param>
+        /// <exception cref = "System.ArgumentNullException"><paramref name = "trapInfo"/> is <see langword = "null"/>.</exception>
+        /// <exception cref = "System.ArgumentException"><paramref name = "trapInfo"/> is invalid.</exception>
+        /// <exception cref = "System.FormatException"><paramref name = "trapInfo"/>Source is not a valid IP address.</exception>
+        /// <returns>An instance of the <see cref = "Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfo"/> class.</returns>
+        /// <example>
+        /// <code>TrapInfo trap = TrapInfoParser.Parse(trapInfo);</code>
+        /// </example>
+        public static Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfo Parse(object trapInfo)
+        {
+            if (trapInfo == null)
+            {
+                throw new System.ArgumentNullException("trapInfo");
+            }
+
+            object[] trapInfoArray = trapInfo as object[];
+            if (trapInfoArray == null || trapInfoArray.Length < 1)
+            {
+                throw new System.ArgumentException("Retrieved invalid trap information.", "trapInfo");
+            }
+
+            object[] generalTrapInfo = trapInfoArray[0] as object[];
+            if (generalTrapInfo == null || generalTrapInfo.Length < 3)
+            {
+                throw new System.ArgumentException("Retrieved invalid trap information: generalTrapInfo was not the correct array.", "trapInfo");
+            }
+
+            string oid = System.Convert.ToString(generalTrapInfo[0], System.Globalization.CultureInfo.CurrentCulture);
+            System.Net.IPAddress source = System.Net.IPAddress.Parse(System.Convert.ToString(generalTrapInfo[1], System.Globalization.CultureInfo.CurrentCulture));
+            int ticks = GetTicks(generalTrapInfo[2]);
+            Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection trapBindings = GetBindings(trapInfoArray);
+            return new Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfo(oid, source, ticks, new Skyline.DataMiner.Library.Protocol.Snmp.Trap.ReadOnlyTrapInfoVariableBindingCollection(trapBindings));
+        }
+
+        private static Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection GetBindings(object[] trapInfoArray)
+        {
+            Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection bindings = new Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBindingCollection();
+            for (int i = 1; i < trapInfoArray.Length; i++)
+            {
+                object[] binding = trapInfoArray[i] as object[];
+                if (binding == null || binding.Length < 2)
+                {
+                    throw new System.ArgumentException("Retrieved invalid trap information.");
+                }
+                else
+                {
+                    string oid = System.Convert.ToString(binding[0], System.Globalization.CultureInfo.CurrentCulture);
+                    string value = System.Convert.ToString(binding[1], System.Globalization.CultureInfo.CurrentCulture);
+                    bindings.Add(new Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding(oid, value));
+                }
+            }
+
+            return bindings;
+        }
+
+        private static int GetTicks(object timeInfo)
+        {
+            int iTick;
+            if (System.Int32.TryParse(System.Convert.ToString(timeInfo, System.Globalization.CultureInfo.CurrentCulture), out iTick))
+            {
+                return iTick;
+            }
+            else
+            {
+                throw new System.ArgumentException("Retrieved invalid time ticks in trap information");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Represents a trap variable binding.
+    /// </summary>
+    [System.Serializable]
+    public sealed class TrapInfoVariableBinding : System.IEquatable<Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding>
+    {
+        private readonly string value;
+        private readonly string oid;
+        internal TrapInfoVariableBinding(string oid, string value)
+        {
+            this.value = value;
+            this.oid = oid;
+        }
+
+        /// <summary>
+        /// Gets the value of this variable binding.
+        /// </summary>
+        /// <value>The value of this variable binding.</value>
+        public string Value
+        {
+            get
+            {
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the OID of this trap variable binding.
+        /// </summary>
+        /// <value>The OID of this trap variable binding.</value>
+        public string Oid
+        {
+            get
+            {
+                return oid;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name = "obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj)
+        {
+            if (object.ReferenceEquals(obj, null))
+                return false;
+            if (object.ReferenceEquals(this, obj))
+                return true;
+            if (this.GetType() != obj.GetType())
+                return false;
+            return this.Equals(obj as Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding);
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the value of this instance is equal to the value of the specified <see cref = "Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding"/>  instance.
+        /// </summary>
+        /// <param name = "other">The object to compare to this instance.</param>
+        /// <returns><c>true</c> if the <paramref name = "other"/> equals the value of this instance; otherwise, <c>false</c>.</returns>
+        /// <remarks><paramref name = "other"/> is considered equal to this binding if both the OID and value are equal.</remarks>
+        public bool Equals(Skyline.DataMiner.Library.Protocol.Snmp.Trap.TrapInfoVariableBinding other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Value == other.Value && Oid == other.Oid;
+        }
+
+        /// <summary>
+        /// Calculates the hash code for this object.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            int hash = 13;
+            hash = (hash * 7) + Value.GetHashCode();
+            hash = (hash * 7) + Oid.GetHashCode();
+            return hash;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("[OID: ");
+            sb.Append(Oid);
+            sb.Append(", value: ");
+            sb.Append(Value);
+            sb.Append(']');
+            return sb.ToString();
+        }
+    }
+}]]>
+		</QAction>
+		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile">
+			<![CDATA[namespace Skyline.Protocol
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text;
+
+    namespace MyExtension
+    {
+        #region Enumerations
+        #endregion
+
+        #region Structs
+        #endregion
+
+        #region Classes
+        public class MyClass
+        {
+            #region Fields
+            #endregion
+
+            #region Constructors
+            #endregion
+
+            #region Enumerations
+            #endregion
+
+            #region Properties
+            #endregion
+
+            #region Methods
+            #endregion
+
+            #region Structs
+            #endregion
+        }
+        #endregion
+    }
+}]]>
+		</QAction>
+		<QAction id="2" name="After Startup" encoding="csharp" triggers="2">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Skyline.DataMiner.Scripting;
+
+/// <summary>
+/// DataMiner QAction Class: After Startup.
+/// </summary>
+public static class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public static void Run(SLProtocol protocol)
+    {
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+        }
+    }
+}
+]]>
+		</QAction>
+		<QAction id="3" name="Trap Processor" encoding="csharp" triggers="20" dllImport="[ProtocolName].[ProtocolVersion].QAction.63000.dll">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net;
+using System.Text;
+using Skyline.DataMiner.Library.Protocol.Snmp.Trap;
+using Skyline.DataMiner.Scripting;
+
+/// <summary>
+/// DataMiner QAction Class.
+/// </summary>
+public static class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public static void Run(SLProtocolExt protocol, object trapInfo)
+    {
+		TrapInfo trap;
+		string trapOid;
+		DateTime receivedTime;
+		DateTime timeNow;
+		IPAddress source;
+		object ipAddress;
+		ReadOnlyTrapInfoVariableBindingCollection bindings;
+
+		List<string> alarmList;
+		string returnAlarmDescription;
+
+		TrapInfoVariableBinding trapvalue1;
+		TrapInfoVariableBinding trapvalue2;
+
+		try
+		{
+			
+			if (Convert.ToUInt16(protocol.GetParameter(31)) == 1)
+			{
+
+				//Build Trap Object
+				trap = TrapInfo.FromTrapData(trapInfo) ?? null;
+
+				if (trap != null)
+				{
+					trapOid = trap.Oid;
+					receivedTime = trap.ReceivedTime; // The time when the trap was received in the SLSNMPManager
+					timeNow = DateTime.Now;
+					ipAddress = Convert.ToString(source = trap.Source);
+					bindings = trap.VariableBindings;
+
+					//If received time isn't in Trap message, add current time
+					if (receivedTime == null)
+					{
+						receivedTime = timeNow;
+					}
+
+					//Grab all parameters from column 4 to check if received alarm is already in the table
+					alarmList = ColumnLookup(protocol, Convert.ToUInt16(protocol.alarmsandnotications.RowCount), 300, 4);
+
+					//Check binding size
+					if (trapOid != null)
+					{
+
+						//Traps received from MIB file Called 'voltronicMIB'
+						// Looks for OID 1.3.6.1.4.1.43943.1.1.12.999.0 (Name: trapleafnodev1v2) and outputs Trap.Value 
+						if (bindings.TryGetValue("1.3.6.1.4.1.43943.1.1.12.999.0", out trapvalue1))
+						{
+							//Checks if Table 300 AlarmsAndNotications already has the received alarm? Otherwise adds alarm to table 300 AlarmsAndNotications 
+							if (!alarmList.Contains(trapvalue1.Value))
+							{
+								AlarmsandnoticationsQActionTable alarmSandNoticationsTable = new AlarmsandnoticationsQActionTable(protocol, 300, "AlarmsAndNotications");
+								AlarmsandnoticationsQActionRow row = new AlarmsandnoticationsQActionRow();
+								row.Time_302 = Convert.ToString(receivedTime);
+								row.Ipaddress_303 = ipAddress;
+								row.Message_304 = trapvalue1.Value;
+								alarmSandNoticationsTable.AddRow(row.ToObjectArray());
+							}
+							else
+							{
+								protocol.Log("Alarm Already in the table" + " ", LogType.Allways, LogLevel.LogEverything);
+							}
+						}
+
+						//Traps received from MIB file Called 'RFC1628'
+						//Looks for OID 1.3.6.1.2.1.33.1.6.2.1.2.1 (Name: upsAlarmDescr) and outputs Trap.Value 
+						else if (bindings.TryGetValue("1.3.6.1.2.1.33.1.6.2.1.2.1", out trapvalue2))
+						{
+							//Build alarm dictionary object using AlarmLookup method
+							returnAlarmDescription = AlarmLookup(trapvalue2.Value, protocol);
+
+							//Checks if Table 300 AlarmsAndNotications already has the received alarm? Otherwise adds alarm to table 300 AlarmsAndNotications  
+							if (!alarmList.Contains(returnAlarmDescription))
+							{
+								AlarmsandnoticationsQActionTable alarmSandNoticationsTable = new AlarmsandnoticationsQActionTable(protocol, 300, "AlarmsAndNotications");
+								AlarmsandnoticationsQActionRow row = new AlarmsandnoticationsQActionRow();
+								row.Time_302 = Convert.ToString(receivedTime);
+								row.Ipaddress_303 = ipAddress;
+								row.Message_304 = returnAlarmDescription;
+								alarmSandNoticationsTable.AddRow(row.ToObjectArray());
+							}
+							else
+							{
+								protocol.Log("The received alarm is already logged in table 300 AlarmsAndNotications" + " ", LogType.Allways, LogLevel.LogEverything);
+							}
+						}
+						else
+						{
+							protocol.Log("Failed to find matching OID" + " ", LogType.Allways, LogLevel.LogEverything);
+						}
+					}
+				}
+				else
+				{
+					protocol.Log("Trap Object received is Null.............", LogType.Allways, LogLevel.LogEverything);
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+		}
+    }
+
+	public static string AlarmLookup(string alarmList, SLProtocolExt protocol)
+	{
+		Dictionary<string, string> keyValuePairs;
+		string[] alarms;
+		string[] alarmOID;
+		string results;
+
+		keyValuePairs = new Dictionary<string, string>();
+
+		alarmOID = new string[] { "1.3.6.1.2.1.33.1.6.3","1.3.6.1.2.1.33.1.6.3.1","1.3.6.1.2.1.33.1.6.3.2","1.3.6.1.2.1.33.1.6.3.3","1.3.6.1.2.1.33.1.6.3.4","1.3.6.1.2.1.33.1.6.3.5","1.3.6.1.2.1.33.1.6.3.6",
+			"1.3.6.1.2.1.33.1.6.3.7","1.3.6.1.2.1.33.1.6.3.8","1.3.6.1.2.1.33.1.6.3.9","1.3.6.1.2.1.33.1.6.3.10","1.3.6.1.2.1.33.1.6.3.11","1.3.6.1.2.1.33.1.6.3.12","1.3.6.1.2.1.33.1.6.3.13","1.3.6.1.2.1.33.1.6.3.14",
+			"1.3.6.1.2.1.33.1.6.3.15","1.3.6.1.2.1.33.1.6.3.16","1.3.6.1.2.1.33.1.6.3.17","1.3.6.1.2.1.33.1.6.3.18","1.3.6.1.2.1.33.1.6.3.19","1.3.6.1.2.1.33.1.6.3.20","1.3.6.1.2.1.33.1.6.3.21","1.3.6.1.2.1.33.1.6.3.22",
+			"1.3.6.1.2.1.33.1.6.3.23","1.3.6.1.2.1.33.1.6.3.24"
+		};
+
+		alarms = new string[] { "upsWellKnownAlarms","upsAlarmBatteryBad", "upsAlarmOnBattery", "upsAlarmLowBattery", "upsAlarmDepletedBattery","upsAlarmTempBad","upsAlarmInputBad",
+			"upsAlarmOutputBad","upsAlarmOutputOverload:", "upsAlarmOnBypass", "upsAlarmBypassBad", "upsAlarmOutputOffAsRequested", "upsAlarmUpsOffAsRequested", "upsAlarmChargerFailed", "upsAlarmUpsOutputOff",
+			"upsAlarmUpsSystemOff", "upsAlarmFanFailure", "upsAlarmFuseFailure", "upsAlarmGeneralFault", "upsAlarmDiagnosticTestFailed", "upsAlarmCommunicationsLost", "upsAlarmAwaitingPower", "upsAlarmShutdownPending", "upsAlarmShutdownImminent",
+			"upsAlarmTestInProgress"
+		};
+
+		for (int i = 0; i < alarms.Length; i++)
+		{
+			keyValuePairs.Add(alarmOID[i], alarms[i]);
+		}
+
+
+		keyValuePairs.TryGetValue(alarmList, out results);
+			
+		
+		return results;
+	}
+
+	public static List<string> ColumnLookup(SLProtocolExt protocol, uint lookupRowCount, uint lookupcheckalarmsTableID, uint lookupcheckkeysColumnPosition)
+	{
+		uint[] lookupcheckalarmCellDetails;
+		List<string> lookupcheckalarmList = new List<string>();
+
+		for (uint i = 1; i <= lookupRowCount; i++)
+		{
+			lookupcheckalarmCellDetails = new uint[] { lookupcheckalarmsTableID, i, lookupcheckkeysColumnPosition };
+			lookupcheckalarmList.Add(Convert.ToString(protocol.NotifyProtocol(122, lookupcheckalarmCellDetails, null)));
+		}
+		return lookupcheckalarmList;
+	}
+}
+]]>
+		</QAction>
+		<QAction id="4" name="Traps processing toggle button" encoding="csharp" triggers="31">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Skyline.DataMiner.Scripting;
+
+/// <summary>
+/// DataMiner QAction Class.
+/// </summary>
+public static class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public static void Run(SLProtocol protocol)
+    {
+        try
+        {
+			protocol.SetParameter(30, protocol.GetParameter(31));
+		}
+        catch (Exception ex)
+        {
+            protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+        }
+    }
+}
+]]>
+		</QAction>
+		<QAction id="20" name="Remove all rows" encoding="csharp" triggers="11">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Skyline.DataMiner.Scripting;
+
+/// <summary>
+/// DataMiner QAction Class.
+/// </summary>
+public static class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public static void Run(SLProtocolExt protocol)
+    {
+        try
+        {
+			int rows = protocol.alarmsandnotications.RowCount;
+
+			for (int i = rows; i >= 1; i--)
+			{
+				protocol.alarmsandnotications.DeleteRow(i - 1);
+			}
+
+			protocol.SetParameter(120, 0);
+		}
+        catch (Exception ex)
+        {
+            protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+        }
+    }
+}
+]]>
+		</QAction>
+		<QAction id="21" name="Remove Row" encoding="csharp" triggers="305" row="true">
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Skyline.DataMiner.Scripting;
+
+/// <summary>
+/// DataMiner QAction Class.
+/// </summary>
+public static class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public static void Run(SLProtocolExt protocol)
+    {
+        try
+        {
+			string key = protocol.RowKey();
+
+			protocol.DeleteRow(300, key);
+		}
+        catch (Exception ex)
+        {
+            protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|Run|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+        }
+    }
+}
+]]>
+		</QAction>
+		<!--><QAction id="22" name="Alarm" encoding="csharp" triggers="710">
+			<Condition>id:710 > 0</Condition>
+		</QAction>-->
+	</QActions>
+	<Groups>
+		<Group id="2">
+			<Name>After Startup</Name>
+			<Description>After Startup</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>2</Action>
+			</Content>
+		</Group>
+		<Group id="10">
+			<Name>System Information</Name>
+			<Description>System Information</Description>
+			<Type>poll</Type>
+			<Content>
+				<Param>100</Param>
+				<Param>101</Param>
+				<Param>102</Param>
+				<Param>103</Param>
+				<Param>104</Param>
+				<Param>120</Param>
+				<Param>121</Param>
+				<Param>122</Param>
+				<Param>123</Param>
+				<Param>125</Param>
+				<Param>126</Param>
+			</Content>
+		</Group>
+		<Group id="11">
+			<Name>UPS Rating</Name>
+			<Description>UPS Rating</Description>
+			<Type>poll</Type>
+			<Content>
+				<Param>200</Param>
+				<Param>201</Param>
+				<Param>202</Param>
+				<Param>203</Param>
+				<Param>204</Param>
+				<Param>205</Param>
+				<Param>206</Param>
+			</Content>
+		</Group>
+		<Group id="12">
+			<Name>UPS Battery</Name>
+			<Description>UPS Battery</Description>
+			<Type>poll</Type>
+			<Content>
+				<Param>400</Param>
+				<Param>401</Param>
+				<Param>402</Param>
+				<Param>403</Param>
+				<Param>404</Param>
+				<Param>405</Param>
+				<Param>406</Param>
+				<Param>407</Param>
+				<Param>408</Param>
+				<Param>409</Param>
+				<Param>410</Param>
+				<Param>411</Param>
+				<Param>412</Param>
+				<Param>413</Param>
+				<Param>414</Param>
+				<Param>415</Param>
+			</Content>
+		</Group>
+		<Group id="13">
+			<Name>Input Information</Name>
+			<Description>Input Information</Description>
+			<Type>poll</Type>
+			<Content>
+				<Param>500</Param>
+			</Content>
+		</Group>
+		<Group id="14">
+			<Name>Ouput Information</Name>
+			<Description>Ouput Information</Description>
+			<Type>poll</Type>
+			<Content>
+				<Param>600</Param>
+			</Content>
+		</Group>
+	</Groups>
+	<Triggers>
+		<Trigger id="1">
+			<Name>After Startup</Name>
+			<On>protocol</On>
+			<Time>after startup</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>1</Id>
+			</Content>
+		</Trigger>
+	</Triggers>
+	<Actions>
+		<Action id="1">
+			<Name>After Startup Group</Name>
+			<On id="2">group</On>
+			<Type>execute next</Type>
+		</Action>
+		<Action id="2">
+			<Name>After Startup QAction</Name>
+			<On id="2">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+	</Actions>
+	<Timers>
+		<Timer id="1">
+			<Name>Fast Timer (10s)</Name>
+			<Time initial="true">10000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>11</Group>
+				<Group>12</Group>
+				<Group>13</Group>
+				<Group>14</Group>
+			</Content>
+		</Timer>
+		<Timer id="2">
+			<Name>Medium Timer (1m)</Name>
+			<Time initial="true" dataDisplay="30000">60000</Time>
+			<Interval>75</Interval>
+			<Content/>
+		</Timer>
+		<Timer id="3">
+			<Name>Slow Timer (1h)</Name>
+			<Time initial="true">3600000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>10</Group>
+			</Content>
+		</Timer>
+	</Timers>
+	<PortSettings>
+	</PortSettings>
+	<VersionHistory>
+		<Branches>
+			<Branch id="1">
+				<Comment>Main Branch</Comment>
+				<SystemVersions>
+					<SystemVersion id="0">
+						<MajorVersions>
+							<MajorVersion id="0">
+								<MinorVersions>
+									<MinorVersion id="1">
+										<Date>2022-mm-dd</Date>
+										<Provider>
+											<Author/>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Initial version</NewFeature>
+										</Changes>
+									</MinorVersion>
+								</MinorVersions>
+							</MajorVersion>
+						</MajorVersions>
+					</SystemVersion>
+				</SystemVersions>
+			</Branch>
+		</Branches>
+	</VersionHistory>
+</Protocol>

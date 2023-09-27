@@ -1,0 +1,6569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+****************************************************************************
+*  Copyright (c) 2021,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+By using this driver, you expressly agree with the usage terms and
+conditions set out below.
+This driver and all related materials are protected by copyrights and
+other intellectual property rights that exclusively belong
+to Skyline Communications.
+
+A user license granted for this driver is strictly for personal use only.
+This driver may not be used in any way by anyone without the prior
+written consent of Skyline Communications. Any sublicensing of this
+driver is forbidden.
+
+Any modifications to this driver by the user are only allowed for
+personal use and within the intended purpose of the driver,
+and will remain the sole responsibility of the user.
+Skyline Communications will not be responsible for any damages or
+malfunctions whatsoever of the driver resulting from a modification
+or adaptation by the user.
+
+The content of this driver is confidential information.
+The user hereby agrees to keep this confidential information strictly
+secret and confidential and not to disclose or reveal it, in whole
+or in part, directly or indirectly to any person, entity, organization
+or administration without the prior written consent of
+Skyline Communications.
+
+Any inquiries can be addressed to:
+
+Skyline Communications NV
+Ambachtenstraat 33
+B-8870 Izegem
+Belgium
+Tel.	: +32 51 31 35 69
+Fax.	: +32 51 31 01 29
+E-mail	: info@skyline.be
+Web		: www.skyline.be
+Contact	: Ben Vandenberghe
+
+
+Revision History (auto generated):
+
+DATE          VERSION    AUTHOR                         COMMENTS
+
+26/11/2020    1.0.0.1    GBS, Skyline Communications    NF: Initial version
+31/05/2021    1.0.0.2    FME, Skyline Communications    Fix: Parsing errors
+08/07/2021    1.0.0.3    FGE, Skyline Communications    NF: Add support for PTP (PTP Lock Status parameter)
+25/01/2022    1.0.0.4    FGE, Skyline Communications    Fix: Solve issue with incorrect values of PTP Offset.
+07/09/2022    1.1.0.1    BSM, Skyline Communications    Change: Change parsing of response for new firmware
+23/09/2022    1.1.0.2    ADK, Skyline Communications    Fix: Network Traffic updated to correct values
+11/09/2022    1.1.0.3    EKU, Skyline Communications    Change: PTP Parameters filled with fixed set of values if profile is not Customized
+20/10/2022    1.1.0.4    NBE, Skyline Communications    NF: Add dynamic polling feature based on device's Port 1 & Port 2 IP addresses.
+22/11/2022    1.1.0.5    EKU, Skyline Communications    Change: Changes on PTP parameters
+24/04/2023    1.1.0.6    AIV, Skyline Communications    Fix: Modified ParseStatisticsParamKernelRavio method.
+21/08/2023    1.1.0.6    DM,  ABC						Added ParameterGroups & NamingFormat to both tables to allow DCF conectivity. 
+-->
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>directOut montone.42</Name>
+	<Description>directOut montone.42 DataMiner driver</Description>
+	<Version>1.1.0.6</Version>
+	<IntegrationID>DMS-DRV-7011</IntegrationID>
+	<Provider>Skyline Communications</Provider>
+	<Vendor>directOut</Vendor>
+	<VendorOID>1.3.6.1.4.1.8813.2.1016</VendorOID>
+	<DeviceOID>1</DeviceOID>
+	<ElementType>Audio Gateway</ElementType>
+	<Type relativeTimers="true">http</Type>
+	<Display defaultPage="General" pageOrder="General;----------;Input Streams;Output Streams;----------;PTP Config;PTP Status;Network Advanced Settings;----------;Web Interface#http://[Polling Ip]/" wideColumnPages="Input Streams;Output Streams" />
+	<SNMP includepages="true">auto</SNMP>
+	<Compliancies>
+		<CassandraReady>true</CassandraReady>
+	</Compliancies>
+	<ParameterGroups>
+		<Group id="1" name="" type="inout" dynamicId="1000" dynamicIndex="*" />
+		<Group id="2" name="" type="inout" dynamicId="1200" dynamicIndex="*" />
+	</ParameterGroups>
+	<Params>
+		<Param id="2">
+			<Name>TriggerAfterStartupLogic</Name>
+			<Description>Trigger After Startup Logic</Description>
+			<Type>dummy</Type>
+		</Param>
+		<Param id="3" trending="false">
+			<Name>ConfigParamStreamId</Name>
+			<Description>Configuration Parameter Stream ID</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Store the stream ID to request</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>0</DefaultValue>
+			</Interprete>
+		</Param>
+		<Param id="4" trending="false">
+			<Name>ConfigStreamBuffer</Name>
+			<Description>Configuration Stream Buffer</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+		</Param>
+		<Param id="5">
+			<Name>GeneralPageButton</Name>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>13</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">pagebutton</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Statistics...</Display>
+						<Value>Statistics</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Network...</Display>
+						<Value>Network</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Traffic...</Display>
+						<Value>Traffic</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="6" trending="false">
+			<Name>dataminerIP</Name>
+			<Description>DataMiner IP</Description>
+			<Type>ip</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<!--<Param id="7" trending="false" save="true">
+			<Name>DynamicPollingIp</Name>
+			<Description>Dynamic Polling IP</Description>
+			<Type options="dynamic ip">read</Type>
+			<Information>
+				<Subtext>Dynamic IP Polling.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay onAppLevel="true">true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>-->
+		<Param id="10" trending="false">
+			<Name>ParseStatisticsResponse</Name>
+			<Description>ParseStatisticsResponse</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="11" trending="false">
+			<Name>ParseConfigurationResponse</Name>
+			<Description>ParseConfigurationResponse</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="12" trending="false">
+			<Name>ParseConfigurationStreamResponse</Name>
+			<Description>ParseConfigurationStreamResponse</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="20" trending="false">
+			<Name>StatusCode</Name>
+			<Description>StatusCode</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="21" trending="false">
+			<Name>StatisticsResponse</Name>
+			<Description>StatisticsResponse</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="22" trending="false">
+			<Name>ConfigurationResponse</Name>
+			<Description>ConfigurationResponse</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="23" trending="false">
+			<Name>ConfigurationStreamResponse</Name>
+			<Description>ConfigurationStreamResponse</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="40" trending="false">
+			<Name>titleStatus</Name>
+			<Description>Status</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="41" trending="false">
+			<Name>titleStatusEnd</Name>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>12</Row>
+					</Position>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>9</Row>
+					</Position>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="end;connect">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="42" trending="false">
+			<Name>titleConfig</Name>
+			<Description>Config</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="43" trending="false">
+			<Name>titleDropPackets</Name>
+			<Description>Drop Packets</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="44" trending="false">
+			<Name>titleNetworkTraffic</Name>
+			<Description>Network Traffic</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="50" trending="true">
+			<Name>StatisticsTemperature</Name>
+			<Description>Temperature</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the device temperature.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<CH>100</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.11.1 Can't provide a valid range. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>deg C</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.11.1 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="51" trending="true">
+			<Name>StatisticsMadi1Status</Name>
+			<Description>MADI 1 Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the MADI 1 Status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="52" trending="true">
+			<Name>StatisticsMadi2Status</Name>
+			<Description>MADI 2 Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the MADI 2 Status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="53" trending="true">
+			<Name>StatisticsMadi3Status</Name>
+			<Description>MADI 3 Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the MADI 3 status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="54" trending="true">
+			<Name>StatisticsMadi4Status</Name>
+			<Description>MADI 4 Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the MADI 4 status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="55" trending="true">
+			<Name>StatisticsPtpStatus</Name>
+			<Description>PTP Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP Status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="56" trending="true">
+			<Name>StatisticsWckStatus</Name>
+			<Description>WCK Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the WCK status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="57" trending="true">
+			<Name>StatisticsVideoStatus</Name>
+			<Description>Video Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the video status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="58" trending="true">
+			<Name>StatisticsIntStatus</Name>
+			<Description>Int Status</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Int status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="59" trending="true">
+			<Name>StatisticsCpuUsage</Name>
+			<Description>CPU Usage</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the CPU usage.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<WaH />
+				<MiH>75</MiH>
+				<MaH>85</MaH>
+				<CH>90</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="60" trending="true">
+			<Name>StatisticsArp</Name>
+			<Description>ARP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the ARP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="61" trending="true">
+			<Name>StatisticsBaseConnections</Name>
+			<Description>Base Connections</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the base connections statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="62" trending="true">
+			<Name>StatisticsDhcp</Name>
+			<Description>DHCP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the DHCP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="63" trending="true">
+			<Name>StatisticsDns</Name>
+			<Description>DNS</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the DNS statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="64" trending="true">
+			<Name>StatisticsFlash</Name>
+			<Description>FLASH</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the FLASH statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="65" trending="true">
+			<Name>StatisticsIgmp</Name>
+			<Description>IGMP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the IGMP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="66" trending="true">
+			<Name>StatisticsMdns</Name>
+			<Description>MDNS</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the MDNS statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="67" trending="true">
+			<Name>StatisticsPtp</Name>
+			<Description>PTP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="68" trending="true">
+			<Name>StatisticsRs232</Name>
+			<Description>RS232</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the RS232 statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="69" trending="true">
+			<Name>StatisticsRtcp</Name>
+			<Description>RTCP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the RTCP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="70" trending="true">
+			<Name>StatisticsSip</Name>
+			<Description>SIP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the SIP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="71" trending="true">
+			<Name>StatisticsSap</Name>
+			<Description>SAP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the SAP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="72" trending="true">
+			<Name>StatisticsTcp</Name>
+			<Description>TCP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the TCP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="73" trending="true">
+			<Name>StatisticsZeroConf</Name>
+			<Description>Zeroconf</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the ZeroConf statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="74" trending="true">
+			<Name>StatisticsIcmp</Name>
+			<Description>ICMP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the ICMP statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="75" trending="true">
+			<Name>StatisticsBase</Name>
+			<Description>Base</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the base statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="76" trending="true">
+			<Name>StatisticsPtpJitter</Name>
+			<Description>PTP Jitter</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP Jitter statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>us</Units>
+				<Decimals>2</Decimals>
+				<Range>
+					<Low>0</Low>
+					<High>4294967295</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="77" trending="true">
+			<Name>StatisticsPtpOffset</Name>
+			<Description>PTP Offset</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP Offset statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>us</Units>
+				<Decimals>2</Decimals>
+				<Range>
+					<Low>-2147483648</Low>
+					<High>2147483647</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="78" trending="true">
+			<Name>StatisticsPtpClockState</Name>
+			<Description>PTP State</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP State statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Initializing</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Faulty</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Listening</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Pre Master</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Master</Display>
+						<Value>5</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Passive</Display>
+						<Value>6</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Uncalibrated</Display>
+						<Value>7</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Slave</Display>
+						<Value>8</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="79" trending="true">
+			<Name>StatisticsFrameFormat</Name>
+			<Description>Frame Format</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Frame format statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<!-- SuppressValidator 2.13.7 Incorrect warning, 'kFrame' is a correct notation. -->
+						<Display>48 kFrame</Display>
+						<!-- /SuppressValidator 2.13.7 -->
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<!-- SuppressValidator 2.13.7 Incorrect warning, 'kFrame' is a correct notation. -->
+						<Display>96 kFrame</Display>
+						<!-- /SuppressValidator 2.13.7 -->
+						<Value>0</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="80" trending="true">
+			<Name>StatisticsChannelMode</Name>
+			<Description>Channel Mode</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Channel mode statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>64</Normal>
+				<CH>56</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>11</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>56</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>64</Display>
+						<Value>0</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="81" trending="true">
+			<Name>StatisticsPsu1</Name>
+			<Description>PSU 1</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PSU 1 statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>9</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="82" trending="true">
+			<Name>StatisticsPsu2</Name>
+			<Description>PSU 2</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PSU 2 statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>1</Column>
+						<Row>10</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Off</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>On</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Blinking</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="83" trending="true">
+			<Name>StatisticsSyncPort</Name>
+			<Description>Sync Port</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Sync Port statistics</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default threshold values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Intern</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 1</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 2</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="84" trending="false">
+			<Name>StatisticsGmid</Name>
+			<Description>GMID</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the GMID statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="N/A">
+						<Display state="disabled">N/A</Display>
+						<Value>N/A</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="85" trending="true">
+			<Name>StatisticsPtpMasterSlave</Name>
+			<Description>PTP Master to Slave</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP master to slave offset in nanoseconds.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>ns</Units>
+				<Range>
+					<Low>0</Low>
+					<High>4294967295</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="86" trending="true">
+			<Name>StatisticsPtpSlaveMaster</Name>
+			<Description>PTP Slave to Master</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP slave to master offset in nanoseconds.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>ns</Units>
+				<Range>
+					<Low>0</Low>
+					<High>4294967295</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="87" trending="true">
+			<Name>StatisticsPtpMasterPriority1</Name>
+			<Description>Priority 1</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock priority 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="88" trending="true">
+			<Name>StatisticsPtpMasterPriority2</Name>
+			<Description>Priority 2</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock priority 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="89" trending="false">
+			<Name>StatisticsPtpMasterIp</Name>
+			<Description>IPv4</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Grandmaster IP address.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="90" trending="true">
+			<Name>StatisticsPtpClass</Name>
+			<Description>Clock Class</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP grandmaster class.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="91" trending="true">
+			<Name>StatisticsPtpAccuracy</Name>
+			<Description>Accuracy</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP grandmaster accuracy.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="92" trending="true">
+			<Name>StatisticsPtpDomain</Name>
+			<Description>Clock Domain</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Grandmaster domain.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="93" trending="true">
+			<Name>StatisticsPtpLockState</Name>
+			<Description>PTP Lock State</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP Lock State.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Unlocked</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Locked</Display>
+						<Value>6</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="98" trending="false">
+			<Name>StatisticsPtpMasterTitle</Name>
+			<Description>Current PTP Master</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="99" trending="false">
+			<Name>StatisticsPtpStatsTitle</Name>
+			<Description>PTP Statistics</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Status</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="100" trending="true">
+			<Name>StatisticsTemperatureCpu</Name>
+			<Description>CPU Temperature</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the CPU temperature.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<CH>100</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.11.1 Can't provide a valid range. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>deg C</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.11.1 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="101" trending="true">
+			<Name>StatisticsTemperatureSwitch</Name>
+			<Description>Switch Temperature</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Switch temperature.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<CH>100</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.11.1 Can't provide a valid range. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>deg C</Units>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.11.1 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="102" trending="true">
+			<Name>StatisticsRamUsage</Name>
+			<Description>RAM Usage</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Ram usage.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>0</Column>
+						<Row>9</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="103" trending="true">
+			<Name>StatisticsNmos</Name>
+			<Description>NMOS</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the NMOS statistics.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>%</Units>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Statistics</Page>
+						<Column>1</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="110" trending="true">
+			<Name>StatisticsPacketLossPhy1</Name>
+			<Description>PHY 1 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on NIC1 PHY1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="111" trending="true">
+			<Name>StatisticsPacketLossCpu1</Name>
+			<Description>CPU 1 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on NIC1 CPU1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="112" trending="true">
+			<Name>StatisticsPacketLossRtpRx1</Name>
+			<Description>RTP RX 1 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on buffer between packet filter and RTP engine.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="113" trending="true">
+			<Name>StatisticsPacketLossRtpTx1</Name>
+			<Description>RTP TX 1 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on buffer between audio interface and RTP packet creator.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="114" trending="true">
+			<Name>StatisticsPacketLossPhy2</Name>
+			<Description>PHY 2 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on NIC2 PHY2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="115" trending="true">
+			<Name>StatisticsPacketLossCpu2</Name>
+			<Description>CPU 2 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on NIC2 CPU2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="116" trending="true">
+			<Name>StatisticsPacketLossRtpRx2</Name>
+			<Description>RTP RX 2 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on buffer between packet filter and RTP engine.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="117" trending="true">
+			<Name>StatisticsPacketLossRtpTx2</Name>
+			<Description>RTP TX 2 (Events)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the number of lost packets on buffer between audio interface and RTP packet creator.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 This parameter represents number of lost packets for which no unit needs to be specified. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="118" trending="true">
+			<Name>StatisticsTrafficRxNic1</Name>
+			<Description>NIC 1 RX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 1 Rx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="119" trending="true">
+			<Name>StatisticsTrafficRxNic2</Name>
+			<Description>NIC 2 RX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 2 Rx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="120" trending="true">
+			<Name>StatisticsTrafficRxNic12</Name>
+			<Description>NIC 1+2 RX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 1+2 Rx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="121" trending="true">
+			<Name>StatisticsTrafficTxNic1</Name>
+			<Description>NIC 1 TX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 1 Tx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="122" trending="true">
+			<Name>StatisticsTrafficTxNic2</Name>
+			<Description>NIC 2 TX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 2 Tx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="123" trending="true">
+			<Name>StatisticsTrafficTxNic12</Name>
+			<Description>NIC 1+2 TX</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the bitrate for NIC 1+2 Tx.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Unable to define default thresholds. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Mbps</Units>
+				<Decimals>2</Decimals>
+				<Positions>
+					<Position>
+						<Page>Traffic</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>analog</Type>
+			</Measurement>
+		</Param>
+		<Param id="200" trending="false">
+			<Name>ConfigurationDeviceName</Name>
+			<Description>Device Name</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Name of the RAVENNA device (DHCP-/DNS-Name)</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="201" trending="false">
+			<Name>ConfigurationPort1MacAddress</Name>
+			<Description>Port 1 Mac Address</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Port 1 Mac address.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="202" trending="false" save="true">
+			<Name>ConfigurationPort1IpAddress</Name>
+			<Description>Port 1 IP Address</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Port 1 IP address.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="203" trending="false">
+			<Name>ConfigurationPort2MacAddress</Name>
+			<Description>Port 2 Mac Address</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Port 2 Mac Address.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="204" trending="false" save="true">
+			<Name>ConfigurationPort2IpAddress</Name>
+			<Description>Port 2 IP Address</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Port 2 IP address.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="205" trending="true">
+			<Name>ConfigurationSampleRate</Name>
+			<Description>Sample Rate</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Sample rate.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="-1">
+						<Display state="disabled">N/A</Display>
+						<Value>-1</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default threshold values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal />
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>44.1 kHz</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>48 kHz</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>88.2 kHz</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>96 kHz</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>176.4 kHz</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>192 kHz</Display>
+						<Value>5</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="206" trending="true" save="true">
+			<Name>ConfigurationRavennaProduct</Name>
+			<Description>Ravenna Product</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Ravenna product value.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>1</DefaultValue>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default threshold values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal />
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>MONTONE.42</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RAV.IO</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="256" setter="true">
+			<Name>ConfigurationRavennaProduct</Name>
+			<Description>Ravenna Product</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>MONTONE.42</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RAV.IO</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="207" trending="false">
+			<Name>ActivelyPolledIp</Name>
+			<Description>Actively Polled IP</Description>
+			<Type options="dynamic ip">read</Type>
+			<Information>
+				<Subtext>IP address currently being polled by DataMiner.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+				<Discreets dependencyId="208" />
+			</Measurement>
+		</Param>
+		<Param id="257" setter="true">
+			<Name>ActivelyPolledIp</Name>
+			<Description>Actively Polled IP</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+				<Discreets dependencyId="208" />
+			</Measurement>
+		</Param>
+		<Param id="208" trending="false">
+			<Name>ActivelyPolledIp_discreteDependency</Name>
+			<Description>Actively Polled IP Discrete Dependency</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Semicolon-delimited string of IP addresses for selecting dynamically polled IP.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="300" trending="true">
+			<Name>PtpClockClass</Name>
+			<Description>PTP Clock Class</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the PTP clock class.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="301" trending="true">
+			<Name>PtpAccuracy</Name>
+			<Description>PTP Accuracy</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Accuracy of the PTP clock.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="302" trending="true">
+			<Name>PtpClockDomainPort1</Name>
+			<Description>Clock Domain Port 1</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock domain on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="303" trending="true">
+			<Name>PtpClockDomainPort2</Name>
+			<Description>Clock Domain Port 2</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock domain on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="304" trending="true">
+			<Name>PtpPriority1</Name>
+			<Description>PTP Priority 1</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock priority 1: Clock with lower priority becomes grandmaster.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="305" trending="true">
+			<Name>PtpPriority2</Name>
+			<Description>PTP Priority 2</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock priority 2: Clock with lower priority becomes grandmaster if PTP clock priority 1, grandmaster class, grandmaster accuracy and grandmaster offsetScaledLogVariance are identical.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="306" trending="true">
+			<Name>PtpAnnounce</Name>
+			<Description>Announce</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP announce interval.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>1 s</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>2 s</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>4 s</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>8 s</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>16 s</Display>
+						<Value>4</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="307" trending="true">
+			<Name>PtpSync</Name>
+			<Description>Sync</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock sync interval.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>31.25 ms</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>62.5 ms</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>125 ms</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>250 ms</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>500 ms</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>1 s</Display>
+						<Value>5</Value>
+					</Discreet>
+					<Discreet>
+						<Display>2 s</Display>
+						<Value>6</Value>
+					</Discreet>
+					<Discreet>
+						<Display>4 s</Display>
+						<Value>7</Value>
+					</Discreet>
+					<Discreet>
+						<Display>8 s</Display>
+						<Value>8</Value>
+					</Discreet>
+					<Discreet>
+						<Display>16 s</Display>
+						<Value>9</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="308" trending="true">
+			<Name>PtpMinDelayReq</Name>
+			<Description>Minimum Delay Request</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock minimum delay request interval.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>9</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>125 ms</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>250 ms</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>500 ms</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>1 s</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>2 s</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>4 s</Display>
+						<Value>5</Value>
+					</Discreet>
+					<Discreet>
+						<Display>8 s</Display>
+						<Value>6</Value>
+					</Discreet>
+					<Discreet>
+						<Display>16 s</Display>
+						<Value>7</Value>
+					</Discreet>
+					<Discreet>
+						<Display>32 s</Display>
+						<Value>8</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="309" trending="true">
+			<Name>PtpMinPDelayReq</Name>
+			<Description>Minimum PDelay Request</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock minimum PDelay request interval.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>10</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>1 s</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>2 s</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>4 s</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>8 s</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>16 s</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>32 s</Display>
+						<Value>5</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="310" trending="true">
+			<Name>PtpAnnounceReceiptTimeout</Name>
+			<Description>Announce Receipt Timeout</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock announce receipt timeout.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:2</Sequence>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>11</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="311" trending="true">
+			<Name>PtpOneStepClock</Name>
+			<Description>One Step Clock</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock is one step clock.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>0</Normal>
+				<CH>1</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>12</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Inactive</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Active</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="312" trending="true">
+			<Name>PtpSlaveOnly</Name>
+			<Description>Slave Only</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP always in slave mode.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>13</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Inactive</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Active</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="313" trending="true">
+			<Name>PtpDelayMechanism</Name>
+			<Description>Delay Mechanism</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock delay mechanism peer-to-peer or end-to-end.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>14</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>P2P</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>E2E</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="314" trending="true">
+			<Name>PtpSwitch1Gbps</Name>
+			<Description>No PTP Switch 1 Gigabit/s</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of 1Gbit/s switches without PTP support between grandmaster and module.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>100</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="315" trending="true">
+			<Name>PtpSwitch100Mbps</Name>
+			<Description>No PTP Switch 100 Megabit/s</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of 100Mbit/s switches without PTP support between grandmaster and module</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>10</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="316" trending="true">
+			<Name>PtpProfile</Name>
+			<Description>Profile</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP clock profile.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Default E2E</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Default P2P</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Media E2E</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Media P2P</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Customized</Display>
+						<Value>4</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="317" trending="true">
+			<Name>PtpMode</Name>
+			<Description>Mode</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>PTP mode.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Auto</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Slave Only</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Preferred Master</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="318" trending="true">
+			<Name>PtpInput</Name>
+			<Description>PTP Input</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>NIC used for PTP sync.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default threshold values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Port 1</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 2</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 1 and 2</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="319" trending="false">
+			<Name>PtpSettingsTitle</Name>
+			<Description>PTP Settings</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="320" trending="false">
+			<Name>PtpCurrentSettingsTitle</Name>
+			<Description>PTP Current Settings</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="321" trending="false">
+			<Name>PtpClockSettingsTitle</Name>
+			<Description>PTP Clock Settings</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>PTP Config</Page>
+						<Column>1</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="400" trending="true">
+			<Name>NetworkTcpPortHttp</Name>
+			<Description>TCP Port HTTP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>HTTP port number.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>80</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="401" trending="true">
+			<Name>NetworkTcpPortRtsp</Name>
+			<Description>TCP Port RTSP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>RTSP port number.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>554</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="402" trending="true">
+			<Name>NetworkUdpPortSip</Name>
+			<Description>UDP Port SIP</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>SIP UDP port.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>5060</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="403" trending="true">
+			<Name>NetworkMultiStreamRx</Name>
+			<Description>Multi Stream Rx</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Enable multi-subscription of the same stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>6</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="404" trending="true">
+			<Name>NetworkMdnsAnnouncement</Name>
+			<Description>MDNS Announcement</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Enable MDNS announcement RX/TX.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>3</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>7</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RX Only</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>TX Only</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RX/TX</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="405" trending="true">
+			<Name>NetworkSapAnnouncement</Name>
+			<Description>SAP Announcement</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Enable SAP announcement RX/TX.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>3</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>8</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RX Only</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>TX Only</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RX/TX</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="406" trending="true">
+			<Name>NetworkIgmpVersionPort1</Name>
+			<Description>IGMP Port 1</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>IGMP Version for Port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>3</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Auto</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V1</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V2</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V3</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="407" trending="true">
+			<Name>NetworkIgmpVersionPort2</Name>
+			<Description>IGMP Port 2</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>IGMP Version for Port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>3</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Auto</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V1</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V2</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>V3</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="408" trending="false">
+			<Name>NetworkTitle</Name>
+			<Description>Network Advanced Settings</Description>
+			<Type>fixed</Type>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Network Advanced Settings</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="begin">title</Type>
+			</Measurement>
+		</Param>
+		<Param id="1000">
+			<Name>InputStreams</Name>
+			<Description>Input Streams</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<NamingFormat>
+					<![CDATA[;Input - ;1001]]>
+				</NamingFormat>
+				<ColumnOption idx="0" pid="1001" type="retrieved" options="" />
+				<ColumnOption idx="1" pid="1002" type="retrieved" options="" />
+				<ColumnOption idx="2" pid="1003" type="retrieved" options="" />
+				<ColumnOption idx="3" pid="1004" type="retrieved" options="" />
+				<ColumnOption idx="4" pid="1005" type="retrieved" options="" />
+				<ColumnOption idx="5" pid="1006" type="retrieved" options="" />
+				<ColumnOption idx="6" pid="1007" type="retrieved" options="" />
+				<ColumnOption idx="7" pid="1008" type="retrieved" options="" />
+				<ColumnOption idx="8" pid="1009" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="9" pid="1010" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="10" pid="1011" type="retrieved" options="" />
+				<ColumnOption idx="11" pid="1012" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="12" pid="1013" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="13" pid="1014" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="14" pid="1015" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="15" pid="1016" type="retrieved" options="" />
+				<ColumnOption idx="16" pid="1017" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="17" pid="1018" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="18" pid="1019" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="19" pid="1020" type="retrieved" options="" />
+				<ColumnOption idx="20" pid="1021" type="retrieved" options="" />
+				<ColumnOption idx="21" pid="1022" type="retrieved" options="" />
+				<ColumnOption idx="22" pid="1023" type="retrieved" options="" />
+				<ColumnOption idx="23" pid="1024" type="retrieved" options="" />
+				<ColumnOption idx="24" pid="1025" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="25" pid="1026" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="26" pid="1027" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="27" pid="1028" type="displaykey" options="" />
+			</ArrayOptions>
+			<Information>
+				<Subtext>Input Streams table.</Subtext>
+			</Information>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Input Streams</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:1001|0-1011|10-1002|1-1025|24-1026|25-1003|2-1004|3-1005|4-1006|5-1018|17-1020|19-1027|26-1017|16-1009|8-1010|9-1016|15-1019|18-1007|6-1012|11-1014|13-1021|20-1023|22-1008|7-1013|12-1015|14-1022|21-1024|23-1028|27,width:100-100-100-103-153-173-159-100-134-114-100-118-100-136-104-100-130-192-182-189-166-100-192-182-189-166-100-135,sort:STRING-STRING-STRING-INT-INT-STRING-STRING-STRING-STRING-INT-STRING-INT-INT-INT-INT-STRING-INT-STRING-INT-INT-STRING-STRING-STRING-INT-INT-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="1001" trending="false">
+			<Name>InputStreamsId</Name>
+			<Description>ID [IDX] (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the input stream ID.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1002" trending="true">
+			<Name>InputStreamsStatus</Name>
+			<Description>Status (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the status of each input stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Inactive</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Active</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1003" trending="true">
+			<Name>InputStreamsStreamInput</Name>
+			<Description>Stream Input (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>NIC/Port for stream reception.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>2</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Port 1</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 2</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 1 and 2</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1004" trending="true">
+			<Name>InputStreamsAutomaticConfig</Name>
+			<Description>Automatic Configuration (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Automatic audio stream configuration.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1005" trending="true">
+			<Name>InputStreamsUnicast</Name>
+			<Description>Unicast (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Activate unicast for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1006" trending="true">
+			<Name>InputStreamsTransfer</Name>
+			<Description>Connection Protocol (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Connection protocol.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>3</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>RTSP (Session)</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>SIP (Session)</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>SAP (Session)</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>None</Display>
+						<Value>3</Value>
+					</Discreet>
+					<Discreet>
+						<Display>RTSP (URL)</Display>
+						<Value>4</Value>
+					</Discreet>
+					<Discreet>
+						<Display>SIP (URL)</Display>
+						<Value>5</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1007" trending="false">
+			<Name>InputStreamsDstIpAddrPhy1</Name>
+			<Description>Port 1 - Destination IP Address (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>IP address of audio stream on Port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<High>15</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1008" trending="false">
+			<Name>InputStreamsDstIPAddrPhy2</Name>
+			<Description>Port 2 - Destination IP Address (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>IP address of audio stream on Port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<High>15</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1009" trending="true">
+			<Name>InputStreamsChannels</Name>
+			<Description>Number Of Channels (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of audio channels in stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:1</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>8</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Channels</Units>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1010" trending="true">
+			<Name>InputStreamsRtpPayloadId</Name>
+			<Description>RTP Payload ID (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Payload ID of input stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>127</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1011" trending="false">
+			<Name>InputStreamsName</Name>
+			<Description>Name (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Input stream name.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1012" trending="true">
+			<Name>InputStreamsRtpDstPort1</Name>
+			<Description>Port 1 - RTP Destination Port (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port of RTP packets in stream on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>50000</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1013" trending="true">
+			<Name>InputStreamsRtpDstPort2</Name>
+			<Description>Port 2 - RTP Destination Port (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port of RTP packets in stream on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>50000</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1014" trending="true">
+			<Name>InputStreamsRtcpDstPortPhy1</Name>
+			<Description>Port 1 - RTCP Destination Port (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port of RTCP packets in stream on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>5005</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1015" trending="true">
+			<Name>InputStreamsRtcpDstPortPhy2</Name>
+			<Description>Port 2 - RTCP Destination Port (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port of RTCP packets in stream on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>5005</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1016" trending="true">
+			<Name>InputStreamsAudioFormat</Name>
+			<Description>Audio Format (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Audio encoding of stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>L16</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>L24</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>L32</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>AM824</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1017" trending="true">
+			<Name>InputStreamsStartStreamCh</Name>
+			<Description>Start Channel (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>First channel in matrix where the audio input is placed.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:1</Sequence>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1018" trending="true">
+			<Name>InputStreamsChUnicast</Name>
+			<Description>Unicast Channels (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of channels (unicast).</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:1</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Channels</Units>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1019" trending="true">
+			<Name>InputStreamsMediaOffset</Name>
+			<Description>Media Offset (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Media offset (stream delay) in samples.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Samples</Units>
+				<Range>
+					<Low>0</Low>
+					<High>4294967295</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1020" trending="true">
+			<Name>InputStreamsOffsetFine</Name>
+			<Description>Offset Fine (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Set offset in sample steps.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1021" trending="false">
+			<Name>InputStreamsSrcIpAddressPhy1</Name>
+			<Description>Port 1 - Source IP Address (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Source IP address for SSM.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<High>15</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1022" trending="false">
+			<Name>InputStreamsSrcIpAddressPhy2</Name>
+			<Description>Port 2 - Source IP Address (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Source IP address for SSM.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<High>15</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1023" trending="true">
+			<Name>InputStreamsSsmPhy1</Name>
+			<Description>Port 1 - SSM (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Activate SSM for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1024" trending="true">
+			<Name>InputStreamsSsmPhy2</Name>
+			<Description>Port 2 - SSM (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Activate SSM for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1025" trending="true">
+			<Name>InputStreamsBackupStream</Name>
+			<Description>Backup Stream (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Activate a backup stream on connection lost.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Exceptions>
+					<Exception id="1" value="0">
+						<Display state="disabled">Disabled</Display>
+						<Value>0</Value>
+					</Exception>
+				</Exceptions>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default threshold values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>32</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1026" trending="true">
+			<Name>InputStreamsBackupStreamTimeout</Name>
+			<Description>Backup Stream Timeout (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Timeout for switching to a backup stream on connection lost in seconds.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>s</Units>
+				<Range>
+					<Low>1</Low>
+					<High>100</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1027" trending="true">
+			<Name>InputStreamsOffset</Name>
+			<Description>Offset In Samples (Input Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Offset in samples / Sample buffer size.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Samples</Units>
+				<Range>
+					<Low>0</Low>
+					<High>32768</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1028">
+			<Name>Input_Display_Keys</Name>
+			<Description>Display Keys 1000</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1200">
+			<Name>OutputStreams</Name>
+			<Description>Output Streams</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<NamingFormat>
+					<![CDATA[;Out - ;1201]]>
+				</NamingFormat>
+				<ColumnOption idx="0" pid="1201" type="retrieved" options="" />
+				<ColumnOption idx="1" pid="1202" type="retrieved" options="" />
+				<ColumnOption idx="2" pid="1203" type="retrieved" options="" />
+				<ColumnOption idx="3" pid="1204" type="retrieved" options="" />
+				<ColumnOption idx="4" pid="1205" type="retrieved" options="" />
+				<ColumnOption idx="5" pid="1206" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="6" pid="1207" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="7" pid="1208" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="8" pid="1209" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="9" pid="1210" type="retrieved" options="" />
+				<ColumnOption idx="10" pid="1211" type="retrieved" options="" />
+				<ColumnOption idx="11" pid="1212" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="12" pid="1213" type="retrieved" options="" />
+				<ColumnOption idx="13" pid="1214" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="14" pid="1215" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="15" pid="1216" type="retrieved" options="" />
+				<ColumnOption idx="16" pid="1217" type="retrieved" options="" />
+				<ColumnOption idx="17" pid="1218" type="retrieved" options=";disableHeaderSum;disableHistogram;disableHeatmap" />
+				<ColumnOption idx="18" pid="1219" type="retrieved" options="" />
+				<ColumnOption idx="19" pid="1220" type="retrieved" options="" />
+				<ColumnOption idx="20" pid="1221" type="displaykey" options="" />
+			</ArrayOptions>
+			<Information>
+				<Subtext>Output Streams table.</Subtext>
+			</Information>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Output Streams</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:1201|0-1202|1-1203|2-1204|3-1205|4-1212|11-1213|12-1214|13-1215|14-1218|17-1206|5-1208|7-1210|9-1216|15-1219|18-1207|6-1209|8-1211|10-1217|16-1220|19-1221|20,width:100-100-100-102-100-125-100-100-136-104-182-189-192-122-148-182-189-192-122-148-135,sort:STRING-STRING-STRING-STRING-STRING-INT-STRING-INT-INT-INT-INT-INT-STRING-STRING-STRING-INT-INT-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="1201" trending="false">
+			<Name>OutputStreamsId</Name>
+			<Description>ID [IDX] (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the Output Stream ID.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1202" trending="false">
+			<Name>OutputStreamsName</Name>
+			<Description>Name (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Stream name/session name in SDP and for RTSP URL/SIP URL.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1203" trending="true">
+			<Name>OutputStreamsState</Name>
+			<Description>Status (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the status of the stream output.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Inactive</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Active</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1204" trending="true">
+			<Name>OutputStreamsStreamOutput</Name>
+			<Description>Stream Output (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Port selection for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>2</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Port 1</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 2</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Port 1 and 2</Display>
+						<Value>2</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1205" trending="true">
+			<Name>OutputStreamsUnicast</Name>
+			<Description>Unicast Mode (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the unicast stream output status.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1206" trending="true">
+			<Name>OutputStreamsRtpDstPort1</Name>
+			<Description>Port 1 - RTP Destination Port (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port for RTP packets for stream on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>50000</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1207" trending="true">
+			<Name>OutputStreamsRtpDstPort2</Name>
+			<Description>Port 2 - RTP Destination Port (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port for RTP packets for stream on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>50000</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1208" trending="true">
+			<Name>OutputStreamsRtcpDstPort1</Name>
+			<Description>Port 1 - RTCP Destination Port (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port for RTCP packets for stream on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>5005</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1209" trending="true">
+			<Name>OutputStreamsRtcpDstPort2</Name>
+			<Description>Port 2 - RTCP Destination Port (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination port for RTCP packets for stream on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>5005</Normal>
+			</Alarm>
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>65535</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1210" trending="false">
+			<Name>OutputStreamsDstIpAddrPort1</Name>
+			<Description>Port 1 - Destination IP Address (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination IP for stream on port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1211" trending="false">
+			<Name>OutputStreamsDstIpAddrPort2</Name>
+			<Description>Port 2 - Destination IP Address (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Destination IP for stream on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1212" trending="true">
+			<Name>OutputStreamsFrameSize</Name>
+			<Description>Samples Per Frame (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of samples per packet on stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Samples</Units>
+				<Range>
+					<Low>1</Low>
+					<High>700</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1213" trending="true">
+			<Name>OutputStreamsFormat</Name>
+			<Description>Audio Format (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Audio encoding for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>L16</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>L24</Display>
+						<Value>1</Value>
+					</Discreet>
+					<Discreet>
+						<Display>L32</Display>
+						<Value>2</Value>
+					</Discreet>
+					<Discreet>
+						<Display>AM824</Display>
+						<Value>3</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1214" trending="true">
+			<Name>OutputStreamsStartCh</Name>
+			<Description>Start Channel (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>First channel for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:1</Sequence>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+					<High>256</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1215" trending="true">
+			<Name>OutputStreamsNumCh</Name>
+			<Description>Number Of Channels (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Number of channels for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Sequence noset="true">offset:1</Sequence>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>8</Normal>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Units>Channels</Units>
+				<Range>
+					<Low>0</Low>
+					<High>255</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1216" trending="true">
+			<Name>OutputStreamsSipServerEnablePort1</Name>
+			<Description>Port 1 - SIP Server (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>SIP server enable port 1.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1217" trending="true">
+			<Name>OutputStreamsSipServerEnablePort2</Name>
+			<Description>Port 2 - SIP Server (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>SIP server enable port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+				<Normal>1</Normal>
+				<CH>0</CH>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1218" trending="true">
+			<Name>OutputStreamsRtpPayloadId</Name>
+			<Description>RTP Payload ID (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Payload ID for stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.5.1 Can't provide default thresholds values. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<!-- SuppressValidator 2.9.7 Can't provide a valid unit. -->
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>0</Low>
+					<High>127</High>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1219" trending="false">
+			<Name>OutputStreamsSipServerUrlPort1</Name>
+			<Description>Port 1 - SIP Server URL (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the SIP Server URL.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1220" trending="false">
+			<Name>OutputStreamsSipServerUrlPort2</Name>
+			<Description>Port 2 - SIP Server URL (Output Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display the SIP server URL on port 2.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1221">
+			<Name>Output_Display_Keys</Name>
+			<Description>Display Keys 2000</Description>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>string</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="5000">
+			<Name>TriggerElementTimeoutCheck</Name>
+			<Description>Trigger Element Timeout Check</Description>
+			<Type>dummy</Type>
+		</Param>
+	</Params>
+	<HTTP>
+		<Session id="1" name="Statistics">
+			<Connection id="0" name="Statistics">
+				<Request verb="GET" url="/statistic.htm">
+					<Headers>
+						<Header key="Accept">*/*</Header>
+					</Headers>
+					<Parameters>
+						<Parameter key="C">1</Parameter>
+					</Parameters>
+				</Request>
+				<Response statusCode="20">
+					<Content pid="21" />
+				</Response>
+			</Connection>
+		</Session>
+		<Session id="2" name="Configuration">
+			<Connection id="0" name="Configuration">
+				<Request verb="GET" url="/config.htm">
+					<Headers>
+						<Header key="Accept">*/*</Header>
+					</Headers>
+					<Parameters>
+						<Parameter key="C">1</Parameter>
+					</Parameters>
+				</Request>
+				<Response statusCode="20">
+					<Content pid="22" />
+				</Response>
+			</Connection>
+		</Session>
+		<Session id="3" name="ConfigurationStream">
+			<Connection id="0" name="ConfigurationStream">
+				<Request verb="GET" url="/configstream.htm">
+					<Headers>
+						<Header key="Accept">*/*</Header>
+						<!-- SuppressValidator 8.3.1 Header is mandatory on API communication session. -->
+						<Header key="CONNECT_PARAM_STREAM_ID" pid="3" />
+						<!-- /SuppressValidator 8.3.1 -->
+					</Headers>
+					<Parameters>
+						<Parameter key="C">1</Parameter>
+					</Parameters>
+				</Request>
+				<Response statusCode="20">
+					<Content pid="23" />
+				</Response>
+			</Connection>
+		</Session>
+	</HTTP>
+	<QActions>
+		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile">
+			</QAction>
+		<QAction id="2" name="After Startup Logic" encoding="csharp" triggers="2">
+			</QAction>
+		<QAction id="3" name="Parse HTTP Responses" encoding="csharp" triggers="10;11;12">
+			</QAction>
+		<QAction id="5000" name="Dynamic Polling Logic" encoding="csharp" triggers="5000">
+			</QAction>
+	</QActions>
+	<Groups>
+		<Group id="2">
+			<Name>After Startup</Name>
+			<Description>After Startup</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>2</Action>
+			</Content>
+		</Group>
+		<Group id="3">
+			<Name>Statistics</Name>
+			<Description>Statistics</Description>
+			<Type>poll</Type>
+			<Content>
+				<Session>1</Session>
+			</Content>
+		</Group>
+		<Group id="4">
+			<Name>Configuration</Name>
+			<Description>Configuration</Description>
+			<Type>poll</Type>
+			<Content>
+				<Session>2</Session>
+			</Content>
+		</Group>
+		<Group id="5">
+			<Name>ConfigurationStream</Name>
+			<Description>Configuration Stream</Description>
+			<Type>poll</Type>
+			<Content>
+				<Session>3</Session>
+			</Content>
+		</Group>
+		<Group id="5000">
+			<Name>ElementTimeoutCheck</Name>
+			<Description>Element Timeout Check</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>5000</Action>
+			</Content>
+		</Group>
+	</Groups>
+	<Triggers>
+		<Trigger id="1">
+			<Name>AfterStartup</Name>
+			<On>protocol</On>
+			<Time>after startup</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>1</Id>
+			</Content>
+		</Trigger>
+		<Trigger id="3">
+			<Name>AfterStatistics</Name>
+			<On id="3">group</On>
+			<Time>after</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>3</Id>
+				<Id>4</Id>
+			</Content>
+		</Trigger>
+		<Trigger id="4">
+			<Name>AfterConfiguration</Name>
+			<On id="4">group</On>
+			<Time>after</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>5</Id>
+				<Id>6</Id>
+			</Content>
+		</Trigger>
+		<Trigger id="5">
+			<Name>AfterConfigurationStream</Name>
+			<On id="5">group</On>
+			<Time>after</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>7</Id>
+				<Id>8</Id>
+			</Content>
+		</Trigger>
+		<Trigger id="6">
+			<Name>OnChangeConfigurationStreamId</Name>
+			<On id="3">parameter</On>
+			<Time>change</Time>
+			<Type>action</Type>
+			<Content>
+				<Id>9</Id>
+			</Content>
+		</Trigger>
+	</Triggers>
+	<Actions>
+		<Action id="1">
+			<Name>After Startup Group</Name>
+			<On id="2">group</On>
+			<Type>execute next</Type>
+		</Action>
+		<Action id="2">
+			<Name>After Startup QAction</Name>
+			<On id="2">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+		<Action id="3">
+			<Name>QAParseStatisticsResponse</Name>
+			<On id="10">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+		<Action id="4">
+			<Name>ClearStatisticsResponse</Name>
+			<On id="21">parameter</On>
+			<Type>clear</Type>
+		</Action>
+		<Action id="5">
+			<Name>QAParseConfigurationResponse</Name>
+			<On id="11">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+		<Action id="6">
+			<Name>ClearConfigurationResponse</Name>
+			<On id="22">parameter</On>
+			<Type>clear</Type>
+		</Action>
+		<Action id="7">
+			<Name>QAParseConfigurationStreamResponse</Name>
+			<On id="12">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+		<Action id="8">
+			<Name>ClearConfigurationStreamResponse</Name>
+			<On id="23">parameter</On>
+			<Type>clear</Type>
+		</Action>
+		<Action id="9">
+			<Name>StartConfigurationStreamSession</Name>
+			<On id="5">group</On>
+			<Type>execute</Type>
+		</Action>
+		<Action id="5000">
+			<Name>ElementTimeoutCheckTriggerGroup</Name>
+			<On id="5000">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+	</Actions>
+	<Timers>
+		<Timer id="1">
+			<Name>Fast Timer (10s)</Name>
+			<Time initial="true">10000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>3</Group>
+				<Group>5000</Group>
+			</Content>
+		</Timer>
+		<Timer id="2">
+			<Name>Medium Timer (1m)</Name>
+			<Time initial="true">60000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>4</Group>
+			</Content>
+		</Timer>
+	</Timers>
+	<PortSettings name="HTTP Connection">
+		<BusAddress>
+			<DefaultValue>ByPassProxy</DefaultValue>
+		</BusAddress>
+		<PortTypeSerial>
+			<Disabled>true</Disabled>
+		</PortTypeSerial>
+		<PortTypeUDP>
+			<Disabled>true</Disabled>
+		</PortTypeUDP>
+		<IPport>
+			<DefaultValue>80</DefaultValue>
+		</IPport>
+	</PortSettings>
+	<VersionHistory>
+		<Branches>
+			<Branch id="1">
+				<Comment>Main Branch</Comment>
+				<SystemVersions>
+					<SystemVersion id="0">
+						<MajorVersions>
+							<MajorVersion id="0">
+								<MinorVersions>
+									<MinorVersion id="1">
+										<Date>2020-11-26</Date>
+										<Provider>
+											<Author>GBS</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Initial version</NewFeature>
+										</Changes>
+										<References>
+											<TaskId>130616</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="2" basedOn="1.0.0.1">
+										<Date>2021-05-31</Date>
+										<Provider>
+											<Author>FME</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Fix>Parsing errors</Fix>
+										</Changes>
+										<References>
+											<TaskId>154721</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="3" basedOn="1.0.0.2">
+										<Date>2021-07-08</Date>
+										<Provider>
+											<Author>FGE</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Add support for PTP (PTP Lock Status parameter)</NewFeature>
+										</Changes>
+										<References>
+											<TaskId>159985</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="4" basedOn="1.0.0.3">
+										<Date>2022-01-25</Date>
+										<Provider>
+											<Author>FGE</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Fix>Solve issue with incorrect values of PTP Offset.</Fix>
+										</Changes>
+										<References>
+											<TaskId>161772</TaskId>
+										</References>
+									</MinorVersion>
+								</MinorVersions>
+							</MajorVersion>
+						</MajorVersions>
+					</SystemVersion>
+					<SystemVersion id="1">
+						<MajorVersions>
+							<MajorVersion id="0">
+								<Changes>
+									<Change>
+										<Impact>New firmware</Impact>
+										<ActionsToTake>
+											<ActionToTake>New support for RAV.IO module</ActionToTake>
+										</ActionsToTake>
+									</Change>
+								</Changes>
+								<MinorVersions>
+									<MinorVersion id="1" basedOn="1.0.0.4">
+										<Date>2022-09-07</Date>
+										<Provider>
+											<Author>BSM</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Change>Change parsing of response for new firmware</Change>
+										</Changes>
+										<References>
+											<TaskId>191126</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="2" basedOn="1.1.0.1">
+										<Date>2022-09-23</Date>
+										<Provider>
+											<Author>ADK</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Fix>Network Traffic updated to correct values</Fix>
+										</Changes>
+										<References>
+											<TaskId>194204</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="3" basedOn="1.1.0.2">
+										<Date>2022-09-11</Date>
+										<Provider>
+											<Author>EKU</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Change>PTP Parameters filled with fixed set of values if profile is not Customized</Change>
+										</Changes>
+										<References>
+											<TaskId>195360</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="4" basedOn="1.1.0.3">
+										<Date>2022-10-20</Date>
+										<Provider>
+											<Author>NBE</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<NewFeature>Add dynamic polling feature based on device's Port 1 &amp; Port 2 IP addresses.</NewFeature>
+										</Changes>
+										<References>
+											<TaskId>194359</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="5" basedOn="1.1.0.4">
+										<Date>2022-11-22</Date>
+										<Provider>
+											<Author>EKU</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Change>Changes on PTP parameters</Change>
+										</Changes>
+										<References>
+											<TaskId>198104</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="6" basedOn="1.1.0.5">
+										<Date>2023-04-24</Date>
+										<Provider>
+											<Author>AIV</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Fix>Modified ParseStatisticsParamKernelRavio method.</Fix>
+										</Changes>
+										<References>
+											<TaskId>207869</TaskId>
+										</References>
+									</MinorVersion>
+								</MinorVersions>
+							</MajorVersion>
+						</MajorVersions>
+					</SystemVersion>
+				</SystemVersions>
+			</Branch>
+		</Branches>
+	</VersionHistory>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+				<DigestValue>gUyyHSLGjNaZ9Saz5pGLrqiOtos=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>1BUrIaFpElVfFhqGEDriCj0u/G39S/pJ5qOlfuJ2ZY4rIbYjzClwNUEaIe8wqE/FNtYLP2Jb5SIujiZpViFuiSKlBWr9JQ60L5yCUeIY9n8pJzHGyrl8SQtMSDO1vRMPyKO5yx0nRUFHK9v8GrwQxZCMSKmZcX3fCif0cqKMn/o=</SignatureValue>
+	</Signature>
+</Protocol>

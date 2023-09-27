@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Skyline.Protocol.MyExtension.Helper">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Skyline.Protocol.DynamicPolling.DynamicPollingController">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAQAAAAACBIAEQAAFAAAAQAAAAAA=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="protocol" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="API.Configuration">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="API.Configuration.PtpProfile" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>QAction_1.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>//////////////////////////////////////////8=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.ConfigurationStream">
+    <Position X="5.75" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>///+//////////9//9///+/////f//////////9///8=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="API.Statistics">
+    <Position X="9.25" Y="4.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>dKAJKs62ngoIeBrxaIhhkFCNiEfHMGNy8USKTHFXIHM=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Core.Parser">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Core.Parser.Product">
+        <TypeIdentifier>
+          <NewMemberFileName>QAction_1.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAABAAAAAAACBAAAAABBAAAACAAAI=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Skyline.DataMiner.Scripting.SLProtocol">
+    <Position X="17.75" Y="0.5" Width="3.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="API.LockStatus" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="API.ClockStatus" Collapsed="true">
+    <Position X="2" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QAction_1.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
